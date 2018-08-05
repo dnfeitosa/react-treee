@@ -54,7 +54,7 @@ describe('node component', () => {
         onOpen.should.be.called.once;
     });
 
-    it('should not call the onOpen callback when closing the node', () => {
+    it('should not call the onOpen callback when collapsing the node', () => {
         const node = {toggled: true};
         const onOpen = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(
@@ -64,7 +64,33 @@ describe('node component', () => {
         );
         treeNode.toggle();
 
-        onOpen.should.not.be.called.once;
+        onOpen.should.not.be.called;
+    });
+
+    it('should call the onClose callback when collapsing the node', () => {
+        const node = {toggled: true};
+        const onClose = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onClose={onClose}/>
+        );
+        treeNode.toggle();
+
+        onClose.should.be.called.once;
+    });
+
+    it('should not call the onClose callback when expanding the node', () => {
+        const node = {toggled: false};
+        const onClose = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onClose={onClose}/>
+        );
+        treeNode.toggle();
+
+        onClose.should.not.be.called;
     });
 
     it('should call the onSelect callback once if it is registered on click', () => {

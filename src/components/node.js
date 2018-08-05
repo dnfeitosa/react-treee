@@ -15,10 +15,14 @@ class TreeNode extends React.Component {
     }
 
     toggle() {
-        const {node, onOpen} = this.props;
+        const {node, onOpen, onClose} = this.props;
 
-        if (onOpen && !node.toggled) {
+        if (!node.toggled && onOpen) {
             onOpen(node);
+        }
+
+        if (node.toggled && onClose) {
+            onClose(node);
         }
 
         if (node.children) {
@@ -144,11 +148,12 @@ class TreeNode extends React.Component {
     }
 
     _eventBubbles() {
-        const {onSelect, onOpen} = this.props;
+        const {onSelect, onOpen, onClose} = this.props;
 
         return {
             onSelect,
-            onOpen
+            onOpen,
+            onClose
         };
     }
 }
@@ -162,7 +167,8 @@ TreeNode.propTypes = {
         PropTypes.bool
     ]).isRequired,
     onSelect: PropTypes.func,
-    onOpen: PropTypes.func
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func
 };
 
 export default TreeNode;

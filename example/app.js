@@ -65,6 +65,10 @@ class DemoTree extends React.Component {
         this.setState({cursor: node});
     }
 
+    onClose(node) {
+        console.log('close', node);
+    }
+
     onOpen(node) {
         console.log('open', node);
     }
@@ -99,7 +103,8 @@ class DemoTree extends React.Component {
                     <Treee data={stateData}
                                decorators={decorators}
                                onSelect={this.onSelect}
-                               onOpen={this.onOpen} />
+                               onOpen={this.onOpen}
+                               onClose={this.onClose} />
                 </div>
                 <div style={styles.component}>
                     <NodeViewer node={cursor}/>

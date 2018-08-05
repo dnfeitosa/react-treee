@@ -10,7 +10,7 @@ import defaultAnimations from '../themes/animations';
 
 class Treee extends React.Component {
     render() {
-        const {animations, decorators, data, onSelect, onOpen, style} = this.props;
+        const {animations, decorators, data, onSelect, onOpen, onClose, style} = this.props;
 
         // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
         const treeData = Array.isArray(data)
@@ -27,6 +27,7 @@ class Treee extends React.Component {
                               node={node}
                               onSelect={onSelect}
                               onOpen={onOpen}
+                              onClose={onClose}
                               style={style.tree.node}/>
                 )}
             </ul>
@@ -46,6 +47,7 @@ Treee.propTypes = {
     ]),
     onSelect: PropTypes.func,
     onOpen: PropTypes.func,
+    onClose: PropTypes.func,
     decorators: PropTypes.object
 };
 
