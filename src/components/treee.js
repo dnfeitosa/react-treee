@@ -10,17 +10,17 @@ import defaultAnimations from '../themes/animations';
 
 class Treee extends React.Component {
     render() {
-        const {animations, decorators, data: propsData, onSelect, onOpen, style} = this.props;
-        let data = propsData;
+        const {animations, decorators, data, onSelect, onOpen, style} = this.props;
 
         // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
-        if (!Array.isArray(data)) {
-            data = [data];
-        }
+        const treeData = Array.isArray(data)
+            ? data
+            : [data];
+
         return (
             <ul style={style.tree.base}
                 ref={ref => this.treeBaseRef = ref}>
-                {data.map((node, index) =>
+                {treeData.map((node, index) =>
                     <TreeNode animations={animations}
                               decorators={decorators}
                               key={node.id || index}
