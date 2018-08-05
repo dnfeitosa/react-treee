@@ -15,7 +15,6 @@ class TreeNode extends React.Component {
     }
 
     onOpen() {
-        console.log('treenode', 'onopen');
         const {node, onOpen} = this.props;
 
         if (node.children) {
