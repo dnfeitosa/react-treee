@@ -41,6 +41,32 @@ describe('node component', () => {
         treeNode.onClick();
     });
 
+    it('should call the onOpen callback when expanding the node', () => {
+        const node = {toggled: false};
+        const onOpen = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onOpen={onOpen}/>
+        );
+        treeNode.toggle();
+
+        onOpen.should.be.called.once;
+    });
+
+    it('should not call the onOpen callback when closing the node', () => {
+        const node = {toggled: true};
+        const onOpen = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onOpen={onOpen}/>
+        );
+        treeNode.toggle();
+
+        onOpen.should.not.be.called.once;
+    });
+
     it('should call the onSelect callback once if it is registered on click', () => {
         const onSelect = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(

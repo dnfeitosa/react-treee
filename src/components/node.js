@@ -11,18 +11,18 @@ class TreeNode extends React.Component {
         super();
 
         this.onClick = this.onClick.bind(this);
-        this.onOpen = this.onOpen.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
 
-    onOpen() {
+    toggle() {
         const {node, onOpen} = this.props;
+
+        if (onOpen && !node.toggled) {
+            onOpen(node);
+        }
 
         if (node.children) {
             node.toggled = !node.toggled;
-        }
-
-        if (onOpen) {
-            onOpen(node);
         }
 
         this.setState({node: node});
@@ -100,7 +100,7 @@ class TreeNode extends React.Component {
                         decorators={decorators}
                         node={Object.assign({}, node)}
                         onClick={this.onClick}
-                        onOpen={this.onOpen}
+                        onOpen={this.toggle}
                         style={style}/>
         );
     }
