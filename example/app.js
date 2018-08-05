@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {StyleRoot} from 'radium';
-import {Treebeard, decorators} from '../src/index';
+import {Treee, decorators} from '../src/index';
 
 import data from './data';
 import styles from './styles';
@@ -96,7 +96,7 @@ class DemoTree extends React.Component {
                     </div>
                 </div>
                 <div style={styles.component}>
-                    <Treebeard data={stateData}
+                    <Treee data={stateData}
                                decorators={decorators}
                                onSelect={this.onSelect}
                                onOpen={this.onOpen} />

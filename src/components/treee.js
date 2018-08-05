@@ -8,7 +8,7 @@ import defaultDecorators from './decorators';
 import defaultTheme from '../themes/default';
 import defaultAnimations from '../themes/animations';
 
-class TreeBeard extends React.Component {
+class Treee extends React.Component {
     render() {
         const {animations, decorators, data: propsData, onSelect, onOpen, style} = this.props;
         let data = propsData;
@@ -34,7 +34,7 @@ class TreeBeard extends React.Component {
     }
 }
 
-TreeBeard.propTypes = {
+Treee.propTypes = {
     style: PropTypes.object,
     data: PropTypes.oneOfType([
         PropTypes.object,
@@ -49,10 +49,10 @@ TreeBeard.propTypes = {
     decorators: PropTypes.object
 };
 
-TreeBeard.defaultProps = {
+Treee.defaultProps = {
     style: defaultTheme,
     animations: defaultAnimations,
     decorators: defaultDecorators
 };
 
-export default TreeBeard;
+export default Treee;
