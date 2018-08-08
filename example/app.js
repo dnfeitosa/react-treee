@@ -92,10 +92,10 @@ class DemoTree extends React.Component {
                 </div>
                 <div style={styles.component}>
                     <Treee data={stateData}
-                               decorators={decorators}
-                               onSelect={this.onSelect}
-                               onOpen={this.onOpen}
-                               onClose={this.onClose} />
+                           decorators={decorators}
+                           onSelectNode={this.onSelect}
+                           onOpenNode={this.onOpen}
+                           onCloseNode={this.onClose} />
                 </div>
                 <div style={styles.component}>
                     <NodeViewer node={cursor}/>

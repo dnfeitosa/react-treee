@@ -16,7 +16,7 @@ class Treee extends React.Component {
     }
 
     select(node) {
-        const {onSelect} = this.props;
+        const {onSelectNode} = this.props;
         const {selected: previous} = this.state;
 
         if (previous) {
@@ -24,13 +24,15 @@ class Treee extends React.Component {
         }
         node.active = true;
 
-        onSelect(node, previous);
+        if (onSelectNode) {
+            onSelectNode(node, previous);
+        }
 
         this.setState({selected: node});
     }
 
     render() {
-        const {animations, decorators, data, onOpen, onClose, style} = this.props;
+        const {animations, decorators, data, onOpenNode, onCloseNode, style} = this.props;
 
         // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
         const treeData = Array.isArray(data)
@@ -46,8 +48,8 @@ class Treee extends React.Component {
                               key={node.id || index}
                               node={node}
                               onSelect={this.select.bind(this)}
-                              onOpen={onOpen}
-                              onClose={onClose}
+                              onOpen={onOpenNode}
+                              onClose={onCloseNode}
                               style={style.tree.node}/>
                 )}
             </ul>
@@ -65,9 +67,9 @@ Treee.propTypes = {
         PropTypes.object,
         PropTypes.bool
     ]),
-    onSelect: PropTypes.func,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
+    onSelectNode: PropTypes.func,
+    onOpenNode: PropTypes.func,
+    onCloseNode: PropTypes.func,
     decorators: PropTypes.object
 };
 
