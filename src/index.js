@@ -1,12 +1,12 @@
 'use strict';
 
-import Treebeard from './components/treebeard';
+import Treee from './components/treee';
 import decorators from './components/decorators';
 import animations from './themes/animations';
 import theme from './themes/default';
 
 export {
-    Treebeard,
+    Treee,
     decorators,
     animations,
     theme

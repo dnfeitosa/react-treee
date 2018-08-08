@@ -38,7 +38,59 @@ describe('node component', () => {
                       node={node}
                       onSelect={onSelect}/>
         );
-        treeNode.onClick();
+        treeNode.select();
+    });
+
+    it('should call the onOpen callback when expanding the node', () => {
+        const node = {toggled: false};
+        const onOpen = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onOpen={onOpen}/>
+        );
+        treeNode.toggle();
+
+        onOpen.should.be.called.once;
+    });
+
+    it('should not call the onOpen callback when collapsing the node', () => {
+        const node = {toggled: true};
+        const onOpen = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onOpen={onOpen}/>
+        );
+        treeNode.toggle();
+
+        onOpen.should.not.be.called;
+    });
+
+    it('should call the onClose callback when collapsing the node', () => {
+        const node = {toggled: true};
+        const onClose = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onClose={onClose}/>
+        );
+        treeNode.toggle();
+
+        onClose.should.be.called.once;
+    });
+
+    it('should not call the onClose callback when expanding the node', () => {
+        const node = {toggled: false};
+        const onClose = sinon.spy();
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={node}
+                      onClose={onClose}/>
+        );
+        treeNode.toggle();
+
+        onClose.should.not.be.called;
     });
 
     it('should call the onSelect callback once if it is registered on click', () => {
@@ -49,7 +101,7 @@ describe('node component', () => {
                 onSelect={onSelect}
             />
         );
-        treeNode.onClick();
+        treeNode.select();
 
         onSelect.should.be.called.once;
     });
@@ -57,7 +109,7 @@ describe('node component', () => {
     it('should not throw an exception if a callback is not registered on click', () => {
         const treeNode = TestUtils.renderIntoDocument(<TreeNode {...defaults}/>);
 
-        (() => treeNode.onClick()).should.not.throw(Error);
+        (() => treeNode.select()).should.not.throw(Error);
     });
 
     it('should use the node animations if defined', () => {

@@ -26,7 +26,7 @@ export default {
                     name: 'components',
                     children: [
                         { name: 'decorators.js' },
-                        { name: 'treebeard.js' }
+                        { name: 'tree.js' }
                     ]
                 },
                 { name: 'index.js' }

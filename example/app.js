@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import {StyleRoot} from 'radium';
-import {Treebeard, decorators} from '../src/index';
+import {Treee, decorators} from '../src/index';
 
 import data from './data';
 import styles from './styles';
@@ -50,19 +50,14 @@ class DemoTree extends React.Component {
         super();
 
         this.state = {data};
-        this.onSelect = this.onSelect.bind(this);
     }
 
-    onSelect(node) {
-        const {cursor} = this.state;
+    onSelect(node, previous) {
+        console.log('select', node, previous);
+    }
 
-        if (cursor) {
-            cursor.active = false;
-        }
-
-        node.active = true;
-
-        this.setState({cursor: node});
+    onClose(node) {
+        console.log('close', node);
     }
 
     onOpen(node) {
@@ -96,10 +91,11 @@ class DemoTree extends React.Component {
                     </div>
                 </div>
                 <div style={styles.component}>
-                    <Treebeard data={stateData}
-                               decorators={decorators}
-                               onSelect={this.onSelect}
-                               onOpen={this.onOpen} />
+                    <Treee data={stateData}
+                           decorators={decorators}
+                           onSelectNode={this.onSelect}
+                           onOpenNode={this.onOpen}
+                           onCloseNode={this.onClose} />
                 </div>
                 <div style={styles.component}>
                     <NodeViewer node={cursor}/>

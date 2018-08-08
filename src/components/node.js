@@ -9,27 +9,27 @@ import NodeHeader from './header';
 class TreeNode extends React.Component {
     constructor() {
         super();
-
-        this.onClick = this.onClick.bind(this);
-        this.onOpen = this.onOpen.bind(this);
     }
 
-    onOpen() {
-        console.log('treenode', 'onopen');
-        const {node, onOpen} = this.props;
+    toggle() {
+        const {node, onOpen, onClose} = this.props;
+
+        if (!node.toggled && onOpen) {
+            onOpen(node);
+        }
+
+        if (node.toggled && onClose) {
+            onClose(node);
+        }
 
         if (node.children) {
             node.toggled = !node.toggled;
         }
 
-        if (onOpen) {
-            onOpen(node);
-        }
-
         this.setState({node: node});
     }
 
-    onClick() {
+    select() {
         const {node, onSelect} = this.props;
         const {toggled} = node;
 
@@ -100,8 +100,8 @@ class TreeNode extends React.Component {
             <NodeHeader animations={animations}
                         decorators={decorators}
                         node={Object.assign({}, node)}
-                        onClick={this.onClick}
-                        onOpen={this.onOpen}
+                        onClick={this.select.bind(this)}
+                        onOpen={this.toggle.bind(this)}
                         style={style}/>
         );
     }
@@ -145,11 +145,12 @@ class TreeNode extends React.Component {
     }
 
     _eventBubbles() {
-        const {onSelect, onOpen} = this.props;
+        const {onSelect, onOpen, onClose} = this.props;
 
         return {
             onSelect,
-            onOpen
+            onOpen,
+            onClose
         };
     }
 }
@@ -163,7 +164,8 @@ TreeNode.propTypes = {
         PropTypes.bool
     ]).isRequired,
     onSelect: PropTypes.func,
-    onOpen: PropTypes.func
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func
 };
 
 export default TreeNode;

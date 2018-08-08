@@ -8,25 +8,48 @@ import defaultDecorators from './decorators';
 import defaultTheme from '../themes/default';
 import defaultAnimations from '../themes/animations';
 
-class TreeBeard extends React.Component {
+class Treee extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    select(node) {
+        const {onSelectNode} = this.props;
+        const {selected: previous} = this.state;
+
+        if (previous) {
+            previous.active = false;
+        }
+        node.active = true;
+
+        if (onSelectNode) {
+            onSelectNode(node, previous);
+        }
+
+        this.setState({selected: node});
+    }
+
     render() {
-        const {animations, decorators, data: propsData, onSelect, onOpen, style} = this.props;
-        let data = propsData;
+        const {animations, decorators, data, onOpenNode, onCloseNode, style} = this.props;
 
         // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
-        if (!Array.isArray(data)) {
-            data = [data];
-        }
+        const treeData = Array.isArray(data)
+            ? data
+            : [data];
+
         return (
             <ul style={style.tree.base}
                 ref={ref => this.treeBaseRef = ref}>
-                {data.map((node, index) =>
+                {treeData.map((node, index) =>
                     <TreeNode animations={animations}
                               decorators={decorators}
                               key={node.id || index}
                               node={node}
-                              onSelect={onSelect}
-                              onOpen={onOpen}
+                              onSelect={this.select.bind(this)}
+                              onOpen={onOpenNode}
+                              onClose={onCloseNode}
                               style={style.tree.node}/>
                 )}
             </ul>
@@ -34,7 +57,7 @@ class TreeBeard extends React.Component {
     }
 }
 
-TreeBeard.propTypes = {
+Treee.propTypes = {
     style: PropTypes.object,
     data: PropTypes.oneOfType([
         PropTypes.object,
@@ -44,15 +67,16 @@ TreeBeard.propTypes = {
         PropTypes.object,
         PropTypes.bool
     ]),
-    onSelect: PropTypes.func,
-    onOpen: PropTypes.func,
+    onSelectNode: PropTypes.func,
+    onOpenNode: PropTypes.func,
+    onCloseNode: PropTypes.func,
     decorators: PropTypes.object
 };
 
-TreeBeard.defaultProps = {
+Treee.defaultProps = {
     style: defaultTheme,
     animations: defaultAnimations,
     decorators: defaultDecorators
 };
 
-export default TreeBeard;
+export default Treee;
