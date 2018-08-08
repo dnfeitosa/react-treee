@@ -9,9 +9,6 @@ import NodeHeader from './header';
 class TreeNode extends React.Component {
     constructor() {
         super();
-
-        this.onClick = this.onClick.bind(this);
-        this.toggle = this.toggle.bind(this);
     }
 
     toggle() {
@@ -32,7 +29,7 @@ class TreeNode extends React.Component {
         this.setState({node: node});
     }
 
-    onClick() {
+    select() {
         const {node, onSelect} = this.props;
         const {toggled} = node;
 
@@ -103,8 +100,8 @@ class TreeNode extends React.Component {
             <NodeHeader animations={animations}
                         decorators={decorators}
                         node={Object.assign({}, node)}
-                        onClick={this.onClick}
-                        onOpen={this.toggle}
+                        onClick={this.select.bind(this)}
+                        onOpen={this.toggle.bind(this)}
                         style={style}/>
         );
     }

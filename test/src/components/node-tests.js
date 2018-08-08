@@ -38,7 +38,7 @@ describe('node component', () => {
                       node={node}
                       onSelect={onSelect}/>
         );
-        treeNode.onClick();
+        treeNode.select();
     });
 
     it('should call the onOpen callback when expanding the node', () => {
@@ -101,7 +101,7 @@ describe('node component', () => {
                 onSelect={onSelect}
             />
         );
-        treeNode.onClick();
+        treeNode.select();
 
         onSelect.should.be.called.once;
     });
@@ -109,7 +109,7 @@ describe('node component', () => {
     it('should not throw an exception if a callback is not registered on click', () => {
         const treeNode = TestUtils.renderIntoDocument(<TreeNode {...defaults}/>);
 
-        (() => treeNode.onClick()).should.not.throw(Error);
+        (() => treeNode.select()).should.not.throw(Error);
     });
 
     it('should use the node animations if defined', () => {

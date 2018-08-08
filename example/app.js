@@ -50,19 +50,10 @@ class DemoTree extends React.Component {
         super();
 
         this.state = {data};
-        this.onSelect = this.onSelect.bind(this);
     }
 
-    onSelect(node) {
-        const {cursor} = this.state;
-
-        if (cursor) {
-            cursor.active = false;
-        }
-
-        node.active = true;
-
-        this.setState({cursor: node});
+    onSelect(node, previous) {
+        console.log('select', node, previous);
     }
 
     onClose(node) {

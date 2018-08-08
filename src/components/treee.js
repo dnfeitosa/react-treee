@@ -9,8 +9,28 @@ import defaultTheme from '../themes/default';
 import defaultAnimations from '../themes/animations';
 
 class Treee extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    select(node) {
+        const {onSelect} = this.props;
+        const {selected: previous} = this.state;
+
+        if (previous) {
+            previous.active = false;
+        }
+        node.active = true;
+
+        onSelect(node, previous);
+
+        this.setState({selected: node});
+    }
+
     render() {
-        const {animations, decorators, data, onSelect, onOpen, onClose, style} = this.props;
+        const {animations, decorators, data, onOpen, onClose, style} = this.props;
 
         // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
         const treeData = Array.isArray(data)
@@ -25,7 +45,7 @@ class Treee extends React.Component {
                               decorators={decorators}
                               key={node.id || index}
                               node={node}
-                              onSelect={onSelect}
+                              onSelect={this.select.bind(this)}
                               onOpen={onOpen}
                               onClose={onClose}
                               style={style.tree.node}/>

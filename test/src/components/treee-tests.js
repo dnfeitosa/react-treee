@@ -5,6 +5,8 @@
 import React from 'react';
 import TestUtils from 'react-dom/test-utils';
 
+import sinon from 'sinon';
+
 import defaultDecorators from '../../../src/components/decorators';
 import TreeNode from '../../../src/components/node';
 import Treee from '../../../src/components/treee';
@@ -39,7 +41,6 @@ describe('treee component', () => {
         const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
 
         node.props.node.should.equal(treee.props.data);
-        node.props.onSelect.should.equal(treee.props.onSelect);
     });
 
     it('should use the default theme if none specified', () => {
@@ -72,5 +73,45 @@ describe('treee component', () => {
         const nodes = TestUtils.scryRenderedComponentsWithType(treee, TreeNode);
 
         nodes.length.should.equal(multipleRootNodes.length);
+    });
+
+    describe('when selecting a node', () => {
+        it('should set the selected node to active', (done) => {
+            const onSelect = (node) => {
+                node.active.should.be.true;
+                done();
+            };
+
+            const treee = TestUtils.renderIntoDocument(<Treee data={defaults} onSelect={onSelect} />);
+            const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
+
+            node.select();
+        });
+
+        it('should call the onSelect callback with selected node as argument', () => {
+            const onSelect = sinon.spy();
+            const treee = TestUtils.renderIntoDocument(<Treee data={defaults} onSelect={onSelect} />);
+            const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
+
+            node.select();
+
+            onSelect.withArgs(node.props.node, undefined).should.be.called.once;
+        });
+
+        it('should call the onSelect callback with current and previous selected node as argument', () => {
+            const nodes = [
+                {name: 'node 1'},
+                {name: 'node 2'}
+            ];
+            const onSelect = sinon.spy();
+            const treee = TestUtils.renderIntoDocument(<Treee data={nodes} onSelect={onSelect} />);
+            const ns = TestUtils.scryRenderedComponentsWithType(treee, TreeNode);
+
+            ns[0].select();
+            ns[1].select();
+
+            onSelect.withArgs(ns[0].props.node, undefined).should.be.called.once;
+            onSelect.withArgs(ns[1].props.node, ns[0].props.node).should.be.called.once;
+        });
     });
 });
