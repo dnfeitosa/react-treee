@@ -95,30 +95,29 @@ describe('treee component', () => {
             node.select();
         });
 
-        it('should call the onSelect callback with selected node as argument', () => {
+        it('should call the onSelect callback with the new selection', () => {
             const onSelect = sinon.spy();
             const treee = TestUtils.renderIntoDocument(<Treee data={defaults} onSelectNode={onSelect} />);
             const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
 
             node.select();
 
-            onSelect.withArgs(node.props.node, undefined).should.be.called.once;
+            onSelect.withArgs(node.props.node).should.be.called.once;
         });
 
-        it('should call the onSelect callback with current and previous selected node as argument', () => {
+        it('should call the onDeselect callback with previous selection', () => {
             const nodes = [
                 {name: 'node 1'},
                 {name: 'node 2'}
             ];
-            const onSelect = sinon.spy();
-            const treee = TestUtils.renderIntoDocument(<Treee data={nodes} onSelectNode={onSelect} />);
+            const onDeselect = sinon.spy();
+            const treee = TestUtils.renderIntoDocument(<Treee data={nodes} onDeselectNode={onDeselect} />);
             const ns = TestUtils.scryRenderedComponentsWithType(treee, TreeNode);
 
             ns[0].select();
             ns[1].select();
 
-            onSelect.withArgs(ns[0].props.node, undefined).should.be.called.once;
-            onSelect.withArgs(ns[1].props.node, ns[0].props.node).should.be.called.once;
+            onDeselect.withArgs(ns[0].props.node).should.be.called.once;
         });
     });
 });

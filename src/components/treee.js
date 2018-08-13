@@ -16,7 +16,7 @@ class Treee extends React.Component {
     }
 
     select(node) {
-        const {onSelectNode} = this.props;
+        const {onSelectNode, onDeselectNode} = this.props;
         const {selected: previous} = this.state;
 
         if (previous) {
@@ -24,11 +24,12 @@ class Treee extends React.Component {
         }
         node.activate();
 
+        if (onDeselectNode && previous) {
+            onDeselectNode(previous.props.node);
+        }
+
         if (onSelectNode) {
-            const previousNode = previous
-                ? previous.props.node
-                : undefined;
-            onSelectNode(node.props.node, previousNode);
+            onSelectNode(node.props.node);
         }
 
         this.setState({selected: node});
@@ -75,6 +76,7 @@ Treee.propTypes = {
         PropTypes.bool
     ]),
     onSelectNode: PropTypes.func,
+    onDeselectNode: PropTypes.func,
     onOpenNode: PropTypes.func,
     onCloseNode: PropTypes.func,
     decorators: PropTypes.object
