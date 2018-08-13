@@ -56,6 +56,10 @@ class DemoTree extends React.Component {
         console.log('select', node, previous);
     }
 
+    onDeselect(node) {
+        console.log('deselect', node);
+    }
+
     onClose(node) {
         console.log('close', node);
     }
@@ -94,6 +98,7 @@ class DemoTree extends React.Component {
                     <Treee data={stateData}
                            decorators={decorators}
                            onSelectNode={this.onSelect}
+                           onDeselectNode={this.onDeselect}
                            onOpenNode={this.onOpen}
                            onCloseNode={this.onClose} />
                 </div>
