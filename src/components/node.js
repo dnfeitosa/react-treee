@@ -7,12 +7,16 @@ import {VelocityTransitionGroup} from 'velocity-react';
 import NodeHeader from './header';
 
 class TreeNode extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            node: props.node
+        };
     }
 
     toggle() {
-        const {node, onOpen, onClose} = this.props;
+        const {onOpen, onClose} = this.props;
+        const {node} = this.state;
 
         if (!node.toggled && onOpen) {
             onOpen(node);
@@ -26,15 +30,28 @@ class TreeNode extends React.Component {
             node.toggled = !node.toggled;
         }
 
-        this.setState({node: node});
+        this.setState({node});
+    }
+
+    deactivate() {
+        const {node} = this.state;
+        node.active = false;
+
+        this.setState({node});
+    }
+
+    activate() {
+        const {node} = this.state;
+        node.active = true;
+
+        this.setState({node});
     }
 
     select() {
-        const {node, onSelect} = this.props;
-        const {toggled} = node;
+        const {onSelect} = this.props;
 
         if (onSelect) {
-            onSelect(node, !toggled);
+            onSelect(this);
         }
     }
 
