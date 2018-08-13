@@ -52,8 +52,8 @@ class DemoTree extends React.Component {
         this.state = {data};
     }
 
-    onSelect(node, previous) {
-        console.log('select', node, previous);
+    onSelect(node) {
+        console.log('select', node);
     }
 
     onDeselect(node) {
