@@ -20,15 +20,22 @@ class Treee extends React.Component {
         const {selected: previous} = this.state;
 
         if (previous) {
-            previous.active = false;
+            previous.deactivate();
         }
-        node.active = true;
+        node.activate();
 
         if (onSelectNode) {
-            onSelectNode(node, previous);
+            const previousNode = previous
+                ? previous.props.node
+                : undefined;
+            onSelectNode(node.props.node, previousNode);
         }
 
         this.setState({selected: node});
+    }
+
+    shouldComponentUpdate() {
+        return false;
     }
 
     render() {

@@ -21,24 +21,28 @@ const defaults = {
 };
 
 describe('node component', () => {
-    it('should not have any internal state', () => {
-        const treeNode = TestUtils.renderIntoDocument(<TreeNode {...defaults}/>);
-
-        global.should.not.exist(treeNode.state);
-    });
-
-    it('should invert the toggle state on click', (done) => {
-        const node = {toggled: true};
-        const onSelect = (toggledNode, toggled) => {
-            toggled.should.equal(!toggledNode.toggled);
-            done();
-        };
+    it('should mark the node as active when selected', () => {
+        const nodeData = {active: false};
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
-                      node={node}
-                      onSelect={onSelect}/>
+                      node={nodeData} />
         );
-        treeNode.select();
+        treeNode.activate();
+
+        const component = TestUtils.findRenderedComponentWithType(treeNode, TreeNode);
+        component.state.node.active.should.be.true;
+    });
+
+    it('should mark the node as not active when deactivated', () => {
+        const nodeData = {active: true};
+        const treeNode = TestUtils.renderIntoDocument(
+            <TreeNode {...defaults}
+                      node={nodeData} />
+        );
+        treeNode.deactivate();
+
+        const component = TestUtils.findRenderedComponentWithType(treeNode, TreeNode);
+        component.state.node.active.should.be.false;
     });
 
     it('should call the onOpen callback when expanding the node', () => {
