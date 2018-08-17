@@ -79,7 +79,7 @@ class DemoTree extends React.Component {
     }
 
     render() {
-        const {data: stateData, cursor} = this.state;
+        const {data: treeData, cursor} = this.state;
 
         return (
             <StyleRoot>
@@ -95,7 +95,7 @@ class DemoTree extends React.Component {
                     </div>
                 </div>
                 <div style={styles.component}>
-                    <Treee data={stateData}
+                    <Treee data={treeData}
                            decorators={decorators}
                            onSelectNode={this.onSelect}
                            onDeselectNode={this.onDeselect}
