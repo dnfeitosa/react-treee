@@ -8,6 +8,8 @@ import TestUtils from 'react-dom/test-utils';
 import sinon from 'sinon';
 import {VelocityTransitionGroup as TransitionGroup} from 'velocity-react';
 
+import Tree from '../../../src/model/tree';
+import Node from '../../../src/model/node';
 import NodeHeader from '../../../src/components/header';
 import TreeNode from '../../../src/components/node';
 
@@ -22,10 +24,10 @@ const defaults = {
 
 describe('node component', () => {
     it('should mark the node as active when selected', () => {
-        const nodeData = {active: false};
+        const node = new Node(null, {active: false});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
-                      node={nodeData} />
+                      node={node} />
         );
         treeNode.activate();
 
@@ -34,10 +36,10 @@ describe('node component', () => {
     });
 
     it('should mark the node as not active when deactivated', () => {
-        const nodeData = {active: true};
+        const node = new Node(null, {active: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
-                      node={nodeData} />
+                      node={node} />
         );
         treeNode.deactivate();
 
@@ -46,7 +48,7 @@ describe('node component', () => {
     });
 
     it('should call the onOpen callback when expanding the node', () => {
-        const node = {toggled: false};
+        const node = new Node(null, {toggled: false});
         const onOpen = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
@@ -59,7 +61,7 @@ describe('node component', () => {
     });
 
     it('should not call the onOpen callback when collapsing the node', () => {
-        const node = {toggled: true};
+        const node = new Node(null, {toggled: true});
         const onOpen = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
@@ -72,7 +74,7 @@ describe('node component', () => {
     });
 
     it('should call the onClose callback when collapsing the node', () => {
-        const node = {toggled: true};
+        const node = new Node(null, {toggled: true});
         const onClose = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
@@ -85,7 +87,7 @@ describe('node component', () => {
     });
 
     it('should not call the onClose callback when expanding the node', () => {
-        const node = {toggled: false};
+        const node = new Node(null, {toggled: false});
         const onClose = sinon.spy();
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
@@ -121,7 +123,7 @@ describe('node component', () => {
             toggle: sinon.stub().returns({duration: 0, animation: 'fadeIn'}),
             drawer: sinon.stub().returns({duration: 0, animation: 'fadeIn'})
         };
-        const node = {animations: nodeAnimations};
+        const node = new Node(null, {animations: nodeAnimations});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode{...defaults}
                      node={node}/>
@@ -156,7 +158,7 @@ describe('node component', () => {
         const nodeDecorators = {
             Container: ContainerDecorator
         };
-        const node = {decorators: nodeDecorators, children: []};
+        const node = new Node(null, {decorators: nodeDecorators, children: []});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}/>
@@ -175,7 +177,7 @@ describe('node component', () => {
         const decorators = {
             Container: ContainerDecorator
         };
-        const node = {children: []};
+        const node = new Node(null, {children: []});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       decorators={decorators}
@@ -202,14 +204,14 @@ describe('node component', () => {
     });
 
     it('should render the subtree if toggled', () => {
-        const node = {toggled: true};
+        const node = new Node(null, {toggled: true});
         const treeNode = TestUtils.renderIntoDocument(<TreeNode {...defaults} node={node}/>);
 
         treeNode.subtreeRef.should.exist;
     });
 
     it('should not render the children if not toggled', () => {
-        const node = {toggled: false};
+        const node = new Node(null, {toggled: false});
         const treeNode = TestUtils.renderIntoDocument(<TreeNode {...defaults} node={node}/>);
 
         global.should.not.exist(treeNode.subtreeRef);
@@ -249,7 +251,7 @@ describe('node component', () => {
     });
 
     it('should not render a velocity component if animations is false and not toggled', () => {
-        const node = {toggled: false};
+        const node = new Node(null, {toggled: false});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       animations={false}
@@ -261,7 +263,7 @@ describe('node component', () => {
     });
 
     it('should not render a velocity component if animations is false and toggled', () => {
-        const node = {toggled: true};
+        const node = new Node(null, {toggled: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       animations={false}
@@ -284,7 +286,7 @@ describe('node component', () => {
     });
 
     it('should wrap the children in a list', () => {
-        const node = {toggled: true};
+        const node = new Node(null, {toggled: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}/>
@@ -295,10 +297,17 @@ describe('node component', () => {
     });
 
     it('should render a TreeNode component for each child', () => {
-        const node = {
+        const tree = Tree.fromData({
+            name: 'root',
             toggled: true,
-            children: [{node: {}}, {node: {}}, {node: {}}]
-        };
+            children: [
+                { name: 'child 1' },
+                { name: 'child 2' },
+                { name: 'child 3' }
+            ]
+        });
+        const node = tree.children[0];
+
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}/>
@@ -310,13 +319,13 @@ describe('node component', () => {
     });
 
     it('should render the loading decorator if the node is loading and toggled', () => {
-        const node = {toggled: true, loading: true};
         class LoadingDecorator extends React.Component {
             render() {
                 return <div/>;
             }
         }
         const decorators = createDecorators({loading: LoadingDecorator});
+        const node = new Node(null, {toggled: true, loading: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}
@@ -328,13 +337,13 @@ describe('node component', () => {
     });
 
     it('should not render the loading decorator if the node is not loading but toggled', () => {
-        const node = {toggled: true, loading: false};
         class LoadingDecorator extends React.Component {
             render() {
                 return <div/>;
             }
         }
         const decorators = createDecorators({loading: LoadingDecorator});
+        const node = new Node(null, {toggled: true, loading: false});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}
@@ -346,7 +355,7 @@ describe('node component', () => {
     });
 
     it('should not render the children if the node is Loading', () => {
-        const node = {toggled: true, loading: true};
+        const node = new Node(null, {toggled: true, loading: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}/>

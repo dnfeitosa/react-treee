@@ -33,16 +33,6 @@ describe('treee component', () => {
         nodes.length.should.equal(1);
     });
 
-    it('should pass the top level tree node the associated props', () => {
-        const treee = TestUtils.renderIntoDocument(
-            <Treee data={defaults}
-                   onSelectNode={() => null}/>
-        );
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.node.should.equal(treee.props.data);
-    });
-
     it('should use the default theme if none specified', () => {
         const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
         const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);

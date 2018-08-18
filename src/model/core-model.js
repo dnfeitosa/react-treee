@@ -1,13 +1,13 @@
 'use strict';
 
 export default class CoreModel {
-    childNodes = [];
+    children = [];
 
     appendChild(node) {
-        this.childNodes.push(node);
+        this.children.push(node);
     }
 
     getChildById(id) {
-        return this.childNodes.find((n) => n.id === id);
+        return this.children.find((n) => n.id === id);
     }
 }

@@ -6,10 +6,16 @@ import Node from './node';
 export default class Tree extends CoreModel {
 
     createNode(props) {
-        return Object.freeze(new Node(this, props));
+        return new Node(this, props);
+        // return Object.seal(new Node(this, props));
     }
 
     static fromData(data) {
-        return new Tree();
+        const tree = new Tree();
+        // Support multiple root nodes
+        const treeData = Array.isArray(data)
+            ? data
+            : [data];
+        return Node.fromData(tree, treeData);
     }
 }

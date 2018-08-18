@@ -1,8 +1,10 @@
 'use strict';
 
 export default {
+    id: 'react-treebeard',
     name: 'react-treebeard',
     toggled: true,
+    active: false,
     children: [
         {
             name: 'example',

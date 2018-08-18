@@ -15,17 +15,17 @@ describe('model/CoreModel', () => {
 
         beforeEach(() => {
             model = new TestModel();
-            model.appendChild(model.createNode({id: 'child1', data: { name: 'child 1'}}));
-            model.appendChild(model.createNode({id: 'child2', data: { name: 'child 2'}}));
+            model.appendChild(model.createNode({id: 'child1', name: 'child 1'}));
+            model.appendChild(model.createNode({id: 'child2', name: 'child 2'}));
         });
 
         it('returns all childs', () => {
-            model.childNodes.length.should.be.equal(2);
+            model.children.length.should.be.equal(2);
         });
 
         it('return a child node by id', () => {
-            model.getChildById('child1').data.name.should.be.equal('child 1');
-            model.getChildById('child2').data.name.should.be.equal('child 2');
+            model.getChildById('child1').name.should.be.equal('child 1');
+            model.getChildById('child2').name.should.be.equal('child 2');
         });
     });
 });
