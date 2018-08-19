@@ -55,7 +55,7 @@ describe('model/Tree', () => {
             const grandchildNode = childNode.children[0];
             grandchildNode.id.should.be.equal('grandchild');
             grandchildNode.name.should.be.equal('grandchild node');
-            grandchildNode.children.length.should.be.equal(0);
+            (grandchildNode.children === undefined).should.be.true;
         });
     });
 });

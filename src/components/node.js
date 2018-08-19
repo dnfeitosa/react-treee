@@ -133,7 +133,7 @@ class TreeNode extends React.Component {
         return (
             <ul style={style.subtree} ref={ref => this.subtreeRef = ref}>
                 {
-                    node.children.map((child, index) => {
+                    (node.children || []).map((child, index) => {
 
                         return (<TreeNode {...this._eventBubbles()}
                                           animations={animations}

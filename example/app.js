@@ -14,7 +14,7 @@ const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
 // Example: Customising The Header Decorator To Include Icons
 decorators.Header = ({style, node, onClick}) => {
-    const iconType = node.children ? 'folder' : 'file-text';
+    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
     const iconClass = `fa fa-${iconType}`;
     const iconStyle = {marginRight: '5px'};
 

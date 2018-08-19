@@ -47,7 +47,7 @@ class Treee extends React.Component {
         return (
             <ul style={style.tree.base}
                 ref={ref => this.treeBaseRef = ref}>
-                {tree.children.map((node, index) =>
+                {(tree.children || []).map((node, index) =>
                     <TreeNode animations={animations}
                               decorators={decorators}
                               key={node.id || index}

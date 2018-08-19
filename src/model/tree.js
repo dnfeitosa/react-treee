@@ -16,6 +16,7 @@ export default class Tree extends CoreModel {
         const treeData = Array.isArray(data)
             ? data
             : [data];
+
         return Node.fromData(tree, treeData);
     }
 }

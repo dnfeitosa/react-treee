@@ -5,7 +5,7 @@ import Node from '../../../src/model/node';
 
 class TestModel extends CoreModel {
     createNode(props) {
-        return Object.freeze(new Node(this, props));
+        return new Node(this, props);
     }
 }
 
