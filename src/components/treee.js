@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Tree from '../model/tree';
 import TreeNode from './node';
 import defaultDecorators from './decorators';
 import defaultTheme from '../themes/default';
@@ -42,15 +43,11 @@ class Treee extends React.Component {
     render() {
         const {animations, decorators, data, onOpenNode, onCloseNode, style} = this.props;
 
-        // Support Multiple Root Nodes. Its not formally a tree, but its a use-case.
-        const treeData = Array.isArray(data)
-            ? data
-            : [data];
-
+        const tree = Tree.fromData(data);
         return (
             <ul style={style.tree.base}
                 ref={ref => this.treeBaseRef = ref}>
-                {treeData.map((node, index) =>
+                {(tree.children || []).map((node, index) =>
                     <TreeNode animations={animations}
                               decorators={decorators}
                               key={node.id || index}

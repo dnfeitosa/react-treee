@@ -14,7 +14,7 @@ const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
 // Example: Customising The Header Decorator To Include Icons
 decorators.Header = ({style, node, onClick}) => {
-    const iconType = node.children ? 'folder' : 'file-text';
+    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
     const iconClass = `fa fa-${iconType}`;
     const iconStyle = {marginRight: '5px'};
 
@@ -32,8 +32,13 @@ decorators.Header = ({style, node, onClick}) => {
 class NodeViewer extends React.Component {
     render() {
         const style = styles.viewer;
-        let json = JSON.stringify(this.props.node, null, 4);
 
+        /* prevents circular references error */
+        const replacer = (key, value) => {
+            return key === 'parent' ? `[${value.name}]` : value;
+        };
+
+        let json = JSON.stringify(this.props.node, replacer, 4);
         if (!json) {
             json = HELP_MSG;
         }
@@ -54,6 +59,7 @@ class DemoTree extends React.Component {
 
     onSelect(node) {
         console.log('select', node);
+        this.setState({cursor: node});
     }
 
     onDeselect(node) {
@@ -79,7 +85,7 @@ class DemoTree extends React.Component {
     }
 
     render() {
-        const {data: stateData, cursor} = this.state;
+        const {data: treeData, cursor} = this.state;
 
         return (
             <StyleRoot>
@@ -95,9 +101,9 @@ class DemoTree extends React.Component {
                     </div>
                 </div>
                 <div style={styles.component}>
-                    <Treee data={stateData}
+                    <Treee data={treeData}
                            decorators={decorators}
-                           onSelectNode={this.onSelect}
+                           onSelectNode={this.onSelect.bind(this)}
                            onDeselectNode={this.onDeselect}
                            onOpenNode={this.onOpen}
                            onCloseNode={this.onClose} />
