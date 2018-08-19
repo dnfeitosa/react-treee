@@ -32,8 +32,13 @@ decorators.Header = ({style, node, onClick}) => {
 class NodeViewer extends React.Component {
     render() {
         const style = styles.viewer;
-        let json = JSON.stringify(this.props.node, null, 4);
 
+        /* prevents circular references error */
+        const replacer = (key, value) => {
+            return key === 'parent' ? `[${value.name}]` : value;
+        };
+
+        let json = JSON.stringify(this.props.node, replacer, 4);
         if (!json) {
             json = HELP_MSG;
         }
@@ -54,6 +59,7 @@ class DemoTree extends React.Component {
 
     onSelect(node) {
         console.log('select', node);
+        this.setState({cursor: node});
     }
 
     onDeselect(node) {
@@ -97,7 +103,7 @@ class DemoTree extends React.Component {
                 <div style={styles.component}>
                     <Treee data={treeData}
                            decorators={decorators}
-                           onSelectNode={this.onSelect}
+                           onSelectNode={this.onSelect.bind(this)}
                            onDeselectNode={this.onDeselect}
                            onOpenNode={this.onOpen}
                            onCloseNode={this.onClose} />
