@@ -64,4 +64,37 @@ describe('model/Node', () => {
             (node.children === undefined).should.be.true;
         });
     });
+
+    describe('traversal', () => {
+        const root = new Node(undefined, { id: 'root' });
+        const child1 = root.createNode({id: 'child1' });
+        root.appendChild(child1);
+
+        const child2 = root.createNode({id: 'child2' });
+        root.appendChild(child2);
+
+        it('should return undefined when node has no parent', () => {
+            (root.parent === undefined).should.be.true;
+        });
+
+        it('should return the parent node', () => {
+            child1.parent.should.be.equal(root);
+        });
+
+        it('should return the previous sibling', () => {
+            child2.previousSibling().should.be.equal(child1);
+        });
+
+        it('should return undefined when there are no previous sibling', () => {
+            (child1.previousSibling() === undefined).should.be.true;
+        });
+
+        it('should return the next sibling', () => {
+            child1.nextSibling().should.be.equal(child2);
+        });
+
+        it('should return undefined when there are no next sibling', () => {
+            (child2.nextSibling() === undefined).should.be.true;
+        });
+    });
 });
