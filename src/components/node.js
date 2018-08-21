@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {VelocityTransitionGroup} from 'velocity-react';
@@ -83,7 +81,7 @@ class TreeNode extends React.Component {
         const animations = this.animations();
 
         return (
-            <li ref={ref => this.topLevelRef = ref}
+            <li ref={ref => { this.topLevelRef = ref; }}
                 style={style.base}>
                 {this.renderHeader(decorators, animations)}
 
@@ -104,7 +102,7 @@ class TreeNode extends React.Component {
         const {...restAnimationInfo} = animations.drawer;
         return (
             <VelocityTransitionGroup {...restAnimationInfo}
-                                     ref={ref => this.velocityRef = ref}>
+                                     ref={ref => { this.velocityRef = ref; }}>
                 {toggled ? this.renderChildren(decorators, animations) : null}
             </VelocityTransitionGroup>
         );
@@ -131,7 +129,7 @@ class TreeNode extends React.Component {
         }
 
         return (
-            <ul style={style.subtree} ref={ref => this.subtreeRef = ref}>
+            <ul style={style.subtree} ref={ref => { this.subtreeRef = ref; }}>
                 {
                     (node.children || []).map((child, index) => {
 

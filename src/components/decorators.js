@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Radium from 'radium';
@@ -44,7 +42,7 @@ const Header = ({node, style, onClick}) => {
 };
 Header.propTypes = {
     style: PropTypes.object,
-    onClient: PropTypes.func,
+    onClick: PropTypes.func,
     node: PropTypes.object.isRequired
 };
 
@@ -54,12 +52,11 @@ class Container extends React.Component {
         const {style, decorators, terminal, onClick, node} = this.props;
 
         return (
-            <div ref={ref => this.clickableRef = ref}
+            <div ref={ref => { this.clickableRef = ref; }}
                  style={style.container}>
                 {!terminal ? this.renderToggle() : null}
 
                 <decorators.Header onClick={onClick}
-                                   ref={ref => this.clickableRef = ref}
                                    node={node}
                                    style={style.header}/>
             </div>
@@ -76,7 +73,7 @@ class Container extends React.Component {
         return (
             <VelocityComponent animation={animations.toggle.animation}
                                duration={animations.toggle.duration}
-                               ref={ref => this.velocityRef = ref}>
+                               ref={ref => { this.velocityRef = ref; }}>
                 {this.renderToggleDecorator()}
             </VelocityComponent>
         );

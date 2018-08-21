@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -46,7 +44,7 @@ class Treee extends React.Component {
         const tree = Tree.fromData(data);
         return (
             <ul style={style.tree.base}
-                ref={ref => this.treeBaseRef = ref}>
+                ref={ref => { this.treeBaseRef = ref; }}>
                 {(tree.children || []).map((node, index) =>
                     <TreeNode animations={animations}
                               decorators={decorators}

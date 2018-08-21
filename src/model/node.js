@@ -1,4 +1,3 @@
-'use strict';
 import CoreModel from './core-model';
 
 export default class Node extends CoreModel {

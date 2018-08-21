@@ -29,7 +29,7 @@ rules:
     no-else-return: 2
     no-empty: 2
     no-empty-character-class: 2
-    no-empty-label: 2
+    no-labels: 2
     no-eq-null: 2
     no-eval: 2
     no-ex-assign: 2
@@ -48,7 +48,6 @@ rules:
     no-irregular-whitespace: 2
     no-iterator: 2
     no-label-var: 2
-    no-labels: 2
     no-lone-blocks: 2
     no-lonely-if: 2
     no-loop-func: 2
@@ -134,7 +133,7 @@ rules:
     space-before-function-paren: [2, "never"]
     space-in-parens: 2
     space-infix-ops: 2
-    space-return-throw-case: 2
+    keyword-spacing: 2
     space-unary-ops: [2, {words: true, nonwords: false}]
     spaced-comment: 2
     strict: [2, 'global']
@@ -154,4 +153,3 @@ rules:
     react/prop-types: 1
     react/react-in-jsx-scope: 1
     react/self-closing-comp: 1
-    react/wrap-multilines: 1

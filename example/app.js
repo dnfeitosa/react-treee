@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -27,6 +25,12 @@ decorators.Header = ({style, node, onClick}) => {
             </div>
         </div>
     );
+};
+
+decorators.Header.propTypes = {
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+    node: PropTypes.object.isRequired
 };
 
 class NodeViewer extends React.Component {
