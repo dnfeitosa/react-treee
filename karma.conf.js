@@ -1,5 +1,3 @@
-'use strict';
-
 var webpack = require('webpack');
 var webpackCfg = require('./webpack.config.test.js');
 

@@ -1,5 +1,3 @@
-'use strict';
-
 import Node from '../../../src/model/node';
 
 describe('model/Node', () => {

@@ -1,5 +1,3 @@
-'use strict';
-
 import Tree from '../../../src/model/tree';
 
 describe('model/Tree', () => {
