@@ -10,29 +10,6 @@ import * as filters from './filter';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
-// Example: Customising The Header Decorator To Include Icons
-decorators.Header = ({style, node, onClick}) => {
-    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
-    const iconClass = `fa fa-${iconType}`;
-    const iconStyle = {marginRight: '5px'};
-
-    return (
-        <div style={style.base}>
-            <div style={style.title} onClick={onClick}>
-                <i className={iconClass} style={iconStyle}/>
-
-                {node.name}
-            </div>
-        </div>
-    );
-};
-
-decorators.Header.propTypes = {
-    style: PropTypes.object,
-    onClick: PropTypes.func,
-    node: PropTypes.object.isRequired
-};
-
 class NodeViewer extends React.Component {
     render() {
         const style = styles.viewer;

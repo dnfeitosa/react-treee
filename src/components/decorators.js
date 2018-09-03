@@ -19,8 +19,7 @@ const Toggle = ({style, onOpen}) => {
         <div style={style.base} onClick={onOpen}>
             <div style={style.wrapper}>
                 <svg height={height} width={width}>
-                    <polygon points={points}
-                             style={style.arrow}/>
+                    <polygon points={points} style={style.arrow}/>
                 </svg>
             </div>
         </div>
@@ -32,9 +31,15 @@ Toggle.propTypes = {
 };
 
 const Header = ({node, style, onClick}) => {
+    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
+    const iconClass = `fa fa-${iconType}`;
+    const iconStyle = {marginRight: '5px'};
+
     return (
-        <div style={style.base} onClick={onClick}>
-            <div style={style.title}>
+        <div style={style.base}>
+            <div style={style.title} onClick={onClick}>
+                <i className={iconClass} style={iconStyle}/>
+
                 {node.name}
             </div>
         </div>
@@ -49,16 +54,13 @@ Header.propTypes = {
 @Radium
 class Container extends React.Component {
     render() {
-        const {style, decorators, terminal, onClick, node} = this.props;
+        const {style, terminal, onClick, node} = this.props;
 
         return (
-            <div ref={ref => { this.clickableRef = ref; }}
-                 style={style.container}>
+            <div ref={ref => { this.clickableRef = ref; }} style={style.container}>
                 {!terminal ? this.renderToggle() : null}
 
-                <decorators.Header onClick={onClick}
-                                   node={node}
-                                   style={style.header}/>
+                <Header onClick={onClick} node={node} style={style.header}/>
             </div>
         );
     }
@@ -80,14 +82,13 @@ class Container extends React.Component {
     }
 
     renderToggleDecorator() {
-        const {style, decorators, onOpen} = this.props;
+        const {style, onOpen} = this.props;
 
-        return <decorators.Toggle onOpen={onOpen} style={style.toggle}/>;
+        return <Toggle onOpen={onOpen} style={style.toggle}/>;
     }
 }
 Container.propTypes = {
     style: PropTypes.object.isRequired,
-    decorators: PropTypes.object.isRequired,
     terminal: PropTypes.bool.isRequired,
     onClick: PropTypes.func,
     onOpen: PropTypes.func,
@@ -98,7 +99,7 @@ Container.propTypes = {
     node: PropTypes.object.isRequired
 };
 
-export default {
+export {
     Loading,
     Toggle,
     Header,

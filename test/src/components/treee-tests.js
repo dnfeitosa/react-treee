@@ -47,13 +47,6 @@ describe('treee component', () => {
         node.props.animations.should.equal(defaultAnimations);
     });
 
-    it('should use the default decorators if none specified', () => {
-        const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.decorators.should.equal(defaultDecorators);
-    });
-
     it('should support rendering multiple nodes at the root level', () => {
         const multipleRootNodes = [
             {name: 'root-1', children: []},
