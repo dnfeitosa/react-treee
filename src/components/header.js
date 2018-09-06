@@ -25,25 +25,23 @@ class NodeHeader extends React.Component {
     }
 
     render() {
-        const {animations, node, onClick, onOpen, style} = this.props;
-        const {active, children} = node;
+        const {animations, node, onClick, onOpen} = this.props;
+        const {children} = node;
         const terminal = !children;
-        const container = [style.link, active ? style.activeLink : null];
-        const headerStyles = Object.assign({container}, style);
+        const classes = ['rt-link', node.active ? 'rt-link-active' : null];
 
         return (
             <Container animations={animations}
-                                  node={node}
-                                  onClick={onClick}
-                                  onOpen={onOpen}
-                                  style={headerStyles}
-                                  terminal={terminal} />
+                       node={node}
+                       onClick={onClick}
+                       onOpen={onOpen}
+                       terminal={terminal}
+                       className={classes.join(' ')}/>
         );
     }
 }
 
 NodeHeader.propTypes = {
-    style: PropTypes.object.isRequired,
     animations: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.bool

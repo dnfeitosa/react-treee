@@ -3,42 +3,35 @@ import PropTypes from 'prop-types';
 import Radium from 'radium';
 import {VelocityComponent} from 'velocity-react';
 
-const Loading = ({style}) => {
-    return <div style={style}>loading...</div>;
+const Loading = () => {
+    return <div className="rt-loading">loading...</div>;
 };
 Loading.propTypes = {
     style: PropTypes.object
 };
 
-const Toggle = ({style, onOpen}) => {
-    const {height, width} = style;
-    const midHeight = height * 0.5;
-    const points = `0,0 0,${height} ${width},${midHeight}`;
-
+const Toggle = ({onOpen}) => {
     return (
-        <div style={style.base} onClick={onOpen}>
-            <div style={style.wrapper}>
-                <svg height={height} width={width}>
-                    <polygon points={points} style={style.arrow}/>
-                </svg>
+        <div className="rt-toggle" onClick={onOpen}>
+            <div className="rt-toggle-wrapper">
+                &gt;
             </div>
         </div>
     );
 };
+
 Toggle.propTypes = {
-    style: PropTypes.object,
     onOpen: PropTypes.func
 };
 
-const Header = ({node, style, onClick}) => {
+const Header = ({node, onClick}) => {
     const iconType = node.type === 'folder' ? 'folder' : 'file-text';
-    const iconClass = `fa fa-${iconType}`;
-    const iconStyle = {marginRight: '5px'};
+    const iconClass = `rt-node-icon fa fa-${iconType}`;
 
     return (
-        <div style={style.base}>
-            <div style={style.title} onClick={onClick}>
-                <i className={iconClass} style={iconStyle}/>
+        <div className="rt-node-header">
+            <div onClick={onClick} className="rt-node-title">
+                <i className={iconClass} />
 
                 {node.name}
             </div>
@@ -54,13 +47,14 @@ Header.propTypes = {
 @Radium
 class Container extends React.Component {
     render() {
-        const {style, terminal, onClick, node} = this.props;
+        const {terminal, onClick, node} = this.props;
+        const classes = ['rt-link', node.active ? 'rt-link-active' : null];
 
         return (
-            <div ref={ref => { this.clickableRef = ref; }} style={style.container}>
+            <div ref={ref => { this.clickableRef = ref; }} className={classes.join(' ')}>
                 {!terminal ? this.renderToggle() : null}
 
-                <Header onClick={onClick} node={node} style={style.header}/>
+                <Header onClick={onClick} node={node} />
             </div>
         );
     }
@@ -82,13 +76,12 @@ class Container extends React.Component {
     }
 
     renderToggleDecorator() {
-        const {style, onOpen} = this.props;
+        const {onOpen} = this.props;
 
-        return <Toggle onOpen={onOpen} style={style.toggle}/>;
+        return <Toggle onOpen={onOpen} />;
     }
 }
 Container.propTypes = {
-    style: PropTypes.object.isRequired,
     terminal: PropTypes.bool.isRequired,
     onClick: PropTypes.func,
     onOpen: PropTypes.func,

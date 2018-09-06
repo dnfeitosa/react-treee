@@ -8,7 +8,6 @@ import sinon from 'sinon';
 import TreeNode from '../../../src/components/node';
 import Treee from '../../../src/components/treee';
 import defaultAnimations from '../../../src/themes/animations';
-import defaultTheme from '../../../src/themes/default';
 
 const defaults = {
     name: '',
@@ -28,13 +27,6 @@ describe('treee component', () => {
         const nodes = TestUtils.scryRenderedComponentsWithType(treee, TreeNode);
 
         nodes.length.should.equal(1);
-    });
-
-    it('should use the default theme if none specified', () => {
-        const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.style.should.equal(defaultTheme.tree.node);
     });
 
     it('should use the default animations if none specified', () => {

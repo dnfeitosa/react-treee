@@ -8,6 +8,8 @@ import data from './data';
 import styles from './styles';
 import * as filters from './filter';
 
+import '../scss/react-treee.scss';
+
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
 class NodeViewer extends React.Component {

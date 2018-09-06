@@ -6,10 +6,7 @@ import TestUtils from 'react-dom/test-utils';
 import Header from '../../../src/components/header';
 import {Container} from '../../../src/components/decorators';
 
-import style from '../../../src/themes/default';
-
 const defaults = {
-    style: style.tree.node,
     node: {children: []},
     animations: {toggle: {}}
 };
@@ -90,29 +87,18 @@ describe('header component', () => {
         container.props.terminal.should.be.false;
     });
 
-    // it('should pass in the high-level link style to the container', () => {
-    //     const header = TestUtils.renderIntoDocument(
-    //         <Header {...defaults} />
-    //     );
-    //     const container = TestUtils.findRenderedComponentWithType(header, Container);
-    //
-    //     console.log(container.props.style.container[0]);
-    //
-    //     container.props.style.container[0].should.equal(style.link);
-    // });
+    it('should add the active style class the node is active', () => {
+        const node = {active: true};
+        const header = TestUtils.renderIntoDocument(
+            <Header {...defaults}
+                    node={node} />
+        );
+        const container = TestUtils.findRenderedComponentWithType(header, Container);
 
-    // it('should pass the active link style prop to the container when the node is active', () => {
-    //     const node = {active: true};
-    //     // const s = {activeLink: {color: 'red'}};
-    //     const header = TestUtils.renderIntoDocument(
-    //         <Header {...defaults}
-    //                 node={node}
-    //                 style={style} />
-    //     );
-    //     const container = TestUtils.findRenderedComponentWithType(header, Container);
-    //
-    //     container.props.style.container[1].should.equal(style.activeLink);
-    // });
+        console.log(container.props);
+
+        container.props.className.should.match(/rt-link-active/);
+    });
 
     // it('should not pass the active link style prop to the container when the node is inactive', () => {
     //     const node = {active: false};

@@ -69,12 +69,10 @@ class TreeNode extends React.Component {
     }
 
     render() {
-        const {style} = this.props;
         const animations = this.animations();
 
         return (
-            <li ref={ref => { this.topLevelRef = ref; }}
-                style={style.base}>
+            <li ref={ref => { this.topLevelRef = ref; }} className="rt-node">
                 {this.renderHeader(animations)}
 
                 {this.renderDrawer(animations)}
@@ -101,34 +99,32 @@ class TreeNode extends React.Component {
     }
 
     renderHeader(animations) {
-        const {node, style} = this.props;
+        const {node} = this.props;
 
         return (
             <NodeHeader animations={animations}
                         node={Object.assign({}, node)}
                         onClick={this.select.bind(this)}
-                        onOpen={this.toggle.bind(this)}
-                        style={style}/>
+                        onOpen={this.toggle.bind(this)} />
         );
     }
 
     renderChildren() {
-        const {animations, node, style} = this.props;
+        const {animations, node} = this.props;
 
         if (node.loading) {
             return this.renderLoading();
         }
 
         return (
-            <ul style={style.subtree} ref={ref => { this.subtreeRef = ref; }}>
+            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
                 {
                     (node.children || []).map((child, index) => {
 
                         return (<TreeNode {...this._eventBubbles()}
                                           animations={animations}
                                           key={child.id || index}
-                                          node={child}
-                                          style={style}/>);
+                                          node={child} />);
                     })
                 }
             </ul>
@@ -136,12 +132,10 @@ class TreeNode extends React.Component {
     }
 
     renderLoading() {
-        const {style} = this.props;
-
         return (
-            <ul style={style.subtree}>
+            <ul className="rt-tree">
                 <li>
-                    <Loading style={style.loading}/>
+                    <Loading />
                 </li>
             </ul>
         );
@@ -159,7 +153,6 @@ class TreeNode extends React.Component {
 }
 
 TreeNode.propTypes = {
-    style: PropTypes.object.isRequired,
     node: PropTypes.object.isRequired,
     animations: PropTypes.oneOfType([
         PropTypes.object,
