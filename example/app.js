@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {Treee, decorators} from '../src/index';
+import {Treee} from '../src/index';
 
 import data from './data';
 import styles from './styles';
@@ -84,7 +84,6 @@ class DemoTree extends React.Component {
                 </div>
                 <div style={styles.component}>
                     <Treee data={treeData}
-                           decorators={decorators}
                            onSelectNode={this.onSelect.bind(this)}
                            onDeselectNode={this.onDeselect}
                            onOpenNode={this.onOpen}
