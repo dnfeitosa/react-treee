@@ -24,7 +24,7 @@ module.exports = {
         rules: [{
             test: /\.js$/,
             exclude: [/node_modules/],
-            use: ['react-hot-loader', 'babel-loader', 'eslint-loader']
+            use: ['react-hot-loader', 'babel-loader']
         }, {
             test: /\.scss/,
             use: [{

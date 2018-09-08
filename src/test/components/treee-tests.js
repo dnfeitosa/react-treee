@@ -5,9 +5,9 @@ import TestUtils from 'react-dom/test-utils';
 
 import sinon from 'sinon';
 
-import TreeNode from '../../../src/components/node';
-import Treee from '../../../src/components/treee';
-import defaultAnimations from '../../../src/themes/animations';
+import TreeNode from '../../js/components/node';
+import Treee from '../../js/components/treee';
+import defaultAnimations from '../../js/themes/animations';
 
 const defaults = {
     name: '',

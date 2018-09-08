@@ -1,4 +1,4 @@
-import Node from '../../../src/model/node';
+import Node from '../../js/model/node';
 
 describe('model/Node', () => {
 

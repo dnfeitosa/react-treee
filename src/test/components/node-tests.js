@@ -6,10 +6,10 @@ import TestUtils from 'react-dom/test-utils';
 import sinon from 'sinon';
 import {VelocityTransitionGroup as TransitionGroup} from 'velocity-react';
 
-import Tree from '../../../src/model/tree';
-import Node from '../../../src/model/node';
-import NodeHeader from '../../../src/components/header';
-import TreeNode from '../../../src/components/node';
+import Tree from '../../js/model/tree';
+import Node from '../../js/model/node';
+import NodeHeader from '../../js/components/header';
+import TreeNode from '../../js/components/node';
 
 import {createAnimations, createDecorators} from '../utils/factory';
 

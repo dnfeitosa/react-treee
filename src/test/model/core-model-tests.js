@@ -1,5 +1,5 @@
-import CoreModel from '../../../src/model/core-model';
-import Node from '../../../src/model/node';
+import CoreModel from '../../js/model/core-model';
+import Node from '../../js/model/node';
 
 class TestModel extends CoreModel {
     createNode(props) {

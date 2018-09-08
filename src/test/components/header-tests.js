@@ -3,8 +3,8 @@
 import React from 'react';
 import TestUtils from 'react-dom/test-utils';
 
-import Header from '../../../src/components/header';
-import {Container} from '../../../src/components/decorators';
+import Header from '../../js/components/header';
+import {Container} from '../../js/components/decorators';
 
 const defaults = {
     node: {children: []},

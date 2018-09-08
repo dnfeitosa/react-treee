@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {Treee} from '../src/index';
+import {Treee} from '../index';
 
 import data from './data';
 import styles from './styles';
 import * as filters from './filter';
 
-import '../scss/react-treee.scss';
+import '../src/scss/react-treee.scss';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 

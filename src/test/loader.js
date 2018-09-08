@@ -1,3 +1,3 @@
 require('./support/env');
-var testsContext = require.context('./src', true, /-tests$/);
+var testsContext = require.context('./', true, /-tests$/);
 testsContext.keys().forEach(testsContext);
