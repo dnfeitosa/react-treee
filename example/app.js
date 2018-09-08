@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {StyleRoot} from 'radium';
 import {Treee, decorators} from '../src/index';
 
 import data from './data';
@@ -71,7 +70,7 @@ class DemoTree extends React.Component {
         const {data: treeData, cursor} = this.state;
 
         return (
-            <StyleRoot>
+            <div>
                 <div style={styles.searchBox}>
                     <div className="input-group">
                         <span className="input-group-addon">
@@ -94,7 +93,7 @@ class DemoTree extends React.Component {
                 <div style={styles.component}>
                     <NodeViewer node={cursor}/>
                 </div>
-            </StyleRoot>
+            </div>
         );
     }
 }

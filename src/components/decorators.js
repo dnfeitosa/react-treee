@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radium from 'radium';
 import {VelocityComponent} from 'velocity-react';
 
 const Loading = () => {
@@ -44,7 +43,6 @@ Header.propTypes = {
     node: PropTypes.object.isRequired
 };
 
-@Radium
 class Container extends React.Component {
     render() {
         const {terminal, onClick, node} = this.props;
