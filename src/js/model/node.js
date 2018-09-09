@@ -1,4 +1,3 @@
-'use strict';
 import CoreModel from './core-model';
 
 export default class Node extends CoreModel {
@@ -12,11 +11,19 @@ export default class Node extends CoreModel {
     }
 
     previousSibling() {
-
+        if (!this.parent) {
+            return undefined;
+        }
+        const position = this.parent.childrenPosition(this);
+        return this.parent.childrenAt(position - 1);
     }
 
     nextSibling() {
-
+        if (!this.parent) {
+            return undefined;
+        }
+        const position = this.parent.childrenPosition(this);
+        return this.parent.childrenAt(position + 1);
     }
 
     createNode(props) {

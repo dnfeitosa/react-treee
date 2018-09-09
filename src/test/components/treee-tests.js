@@ -1,17 +1,13 @@
 /*  eslint no-unused-expressions:0  */
 
-'use strict';
-
 import React from 'react';
 import TestUtils from 'react-dom/test-utils';
 
 import sinon from 'sinon';
 
-import defaultDecorators from '../../../src/components/decorators';
-import TreeNode from '../../../src/components/node';
-import Treee from '../../../src/components/treee';
-import defaultAnimations from '../../../src/themes/animations';
-import defaultTheme from '../../../src/themes/default';
+import TreeNode from '../../js/components/node';
+import Treee from '../../js/components/treee';
+import defaultAnimations from '../../js/themes/animations';
 
 const defaults = {
     name: '',
@@ -33,25 +29,11 @@ describe('treee component', () => {
         nodes.length.should.equal(1);
     });
 
-    it('should use the default theme if none specified', () => {
-        const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.style.should.equal(defaultTheme.tree.node);
-    });
-
     it('should use the default animations if none specified', () => {
         const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
         const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
 
         node.props.animations.should.equal(defaultAnimations);
-    });
-
-    it('should use the default decorators if none specified', () => {
-        const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.decorators.should.equal(defaultDecorators);
     });
 
     it('should support rendering multiple nodes at the root level', () => {

@@ -1,5 +1,3 @@
-'use strict';
-
 import CoreModel from './core-model';
 import Node from './node';
 

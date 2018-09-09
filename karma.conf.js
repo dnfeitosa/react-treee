@@ -1,5 +1,3 @@
-'use strict';
-
 var webpack = require('webpack');
 var webpackCfg = require('./webpack.config.test.js');
 
@@ -8,13 +6,13 @@ module.exports = function(config) {
         basePath: '',
         frameworks: ['mocha'],
         files: [
-            'test/loader.js'
+            'src/test/loader.js'
         ],
         exclude: [],
         preprocessors: {
             // only specify one entry point
             // and require all tests in there
-            'test/loader.js': ['webpack', 'sourcemap']
+            'src/test/loader.js': ['webpack', 'sourcemap']
         },
         webpack: webpackCfg,
         webpackMiddleware: {

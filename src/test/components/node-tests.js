@@ -1,22 +1,19 @@
 /*  eslint no-unused-expressions:0  */
 
-'use strict';
-
 import React from 'react';
 import TestUtils from 'react-dom/test-utils';
 
 import sinon from 'sinon';
 import {VelocityTransitionGroup as TransitionGroup} from 'velocity-react';
 
-import Tree from '../../../src/model/tree';
-import Node from '../../../src/model/node';
-import NodeHeader from '../../../src/components/header';
-import TreeNode from '../../../src/components/node';
+import Tree from '../../js/model/tree';
+import Node from '../../js/model/node';
+import NodeHeader from '../../js/components/header';
+import TreeNode from '../../js/components/node';
 
 import {createAnimations, createDecorators} from '../utils/factory';
 
 const defaults = {
-    style: {},
     node: {chilren: []},
     animations: createAnimations(),
     decorators: createDecorators()
@@ -149,45 +146,6 @@ describe('node component', () => {
         animations.drawer.should.be.calledWith(treeNode.props);
     });
 
-    it('should use the node decorators if defined', () => {
-        class ContainerDecorator extends React.Component {
-            render() {
-                return <div/>;
-            }
-        }
-        const nodeDecorators = {
-            Container: ContainerDecorator
-        };
-        const node = new Node(null, {decorators: nodeDecorators, children: []});
-        const treeNode = TestUtils.renderIntoDocument(
-            <TreeNode {...defaults}
-                      node={node}/>
-        );
-        const component = TestUtils.findRenderedComponentWithType(treeNode, ContainerDecorator);
-
-        component.should.exist;
-    });
-
-    it('should fallback to the prop decorators if the node decorators are not defined', () => {
-        class ContainerDecorator extends React.Component {
-            render() {
-                return <div/>;
-            }
-        }
-        const decorators = {
-            Container: ContainerDecorator
-        };
-        const node = new Node(null, {children: []});
-        const treeNode = TestUtils.renderIntoDocument(
-            <TreeNode {...defaults}
-                      decorators={decorators}
-                      node={node}/>
-        );
-        const component = TestUtils.findRenderedComponentWithType(treeNode, ContainerDecorator);
-
-        component.should.exist;
-    });
-
     it('should render a list item at the top level', () => {
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}/>
@@ -318,47 +276,11 @@ describe('node component', () => {
         nodes.length.should.equal(node.children.length + 1);
     });
 
-    it('should render the loading decorator if the node is loading and toggled', () => {
-        class LoadingDecorator extends React.Component {
-            render() {
-                return <div/>;
-            }
-        }
-        const decorators = createDecorators({loading: LoadingDecorator});
-        const node = new Node(null, {toggled: true, loading: true});
-        const treeNode = TestUtils.renderIntoDocument(
-            <TreeNode {...defaults}
-                      node={node}
-                      decorators={decorators}/>
-        );
-        const loading = TestUtils.findRenderedComponentWithType(treeNode, LoadingDecorator);
-
-        loading.should.exist;
-    });
-
-    it('should not render the loading decorator if the node is not loading but toggled', () => {
-        class LoadingDecorator extends React.Component {
-            render() {
-                return <div/>;
-            }
-        }
-        const decorators = createDecorators({loading: LoadingDecorator});
-        const node = new Node(null, {toggled: true, loading: false});
-        const treeNode = TestUtils.renderIntoDocument(
-            <TreeNode {...defaults}
-                      node={node}
-                      decorators={decorators}/>
-        );
-        const loading = TestUtils.scryRenderedComponentsWithType(treeNode, LoadingDecorator);
-
-        loading.should.be.empty;
-    });
-
     it('should not render the children if the node is Loading', () => {
         const node = new Node(null, {toggled: true, loading: true});
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
-                      node={node}/>
+                      node={node} />
         );
 
         global.should.not.exist(treeNode.subtreeRef);

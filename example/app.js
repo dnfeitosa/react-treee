@@ -1,33 +1,15 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {StyleRoot} from 'radium';
-import {Treee, decorators} from '../src/index';
+import {Treee} from '../index';
 
 import data from './data';
 import styles from './styles';
 import * as filters from './filter';
 
+import '../src/scss/react-treee.scss';
+
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
-
-// Example: Customising The Header Decorator To Include Icons
-decorators.Header = ({style, node, onClick}) => {
-    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
-    const iconClass = `fa fa-${iconType}`;
-    const iconStyle = {marginRight: '5px'};
-
-    return (
-        <div style={style.base}>
-            <div style={style.title} onClick={onClick}>
-                <i className={iconClass} style={iconStyle}/>
-
-                {node.name}
-            </div>
-        </div>
-    );
-};
 
 class NodeViewer extends React.Component {
     render() {
@@ -88,7 +70,7 @@ class DemoTree extends React.Component {
         const {data: treeData, cursor} = this.state;
 
         return (
-            <StyleRoot>
+            <div>
                 <div style={styles.searchBox}>
                     <div className="input-group">
                         <span className="input-group-addon">
@@ -102,7 +84,6 @@ class DemoTree extends React.Component {
                 </div>
                 <div style={styles.component}>
                     <Treee data={treeData}
-                           decorators={decorators}
                            onSelectNode={this.onSelect.bind(this)}
                            onDeselectNode={this.onDeselect}
                            onOpenNode={this.onOpen}
@@ -111,7 +92,7 @@ class DemoTree extends React.Component {
                 <div style={styles.component}>
                     <NodeViewer node={cursor}/>
                 </div>
-            </StyleRoot>
+            </div>
         );
     }
 }

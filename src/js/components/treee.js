@@ -1,12 +1,8 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import Tree from '../model/tree';
 import TreeNode from './node';
-import defaultDecorators from './decorators';
-import defaultTheme from '../themes/default';
 import defaultAnimations from '../themes/animations';
 
 class Treee extends React.Component {
@@ -41,21 +37,18 @@ class Treee extends React.Component {
     }
 
     render() {
-        const {animations, decorators, data, onOpenNode, onCloseNode, style} = this.props;
+        const {animations, data, onOpenNode, onCloseNode} = this.props;
 
         const tree = Tree.fromData(data);
         return (
-            <ul style={style.tree.base}
-                ref={ref => this.treeBaseRef = ref}>
+            <ul className="rt-tree" ref={ref => { this.treeBaseRef = ref; }}>
                 {(tree.children || []).map((node, index) =>
                     <TreeNode animations={animations}
-                              decorators={decorators}
                               key={node.id || index}
                               node={node}
                               onSelect={this.select.bind(this)}
                               onOpen={onOpenNode}
-                              onClose={onCloseNode}
-                              style={style.tree.node}/>
+                              onClose={onCloseNode} />
                 )}
             </ul>
         );
@@ -63,7 +56,6 @@ class Treee extends React.Component {
 }
 
 Treee.propTypes = {
-    style: PropTypes.object,
     data: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.array
@@ -75,14 +67,11 @@ Treee.propTypes = {
     onSelectNode: PropTypes.func,
     onDeselectNode: PropTypes.func,
     onOpenNode: PropTypes.func,
-    onCloseNode: PropTypes.func,
-    decorators: PropTypes.object
+    onCloseNode: PropTypes.func
 };
 
 Treee.defaultProps = {
-    style: defaultTheme,
-    animations: defaultAnimations,
-    decorators: defaultDecorators
+    animations: defaultAnimations
 };
 
 export default Treee;

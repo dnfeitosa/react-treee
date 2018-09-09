@@ -1,10 +1,9 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import NodeHeader from './header';
+import {Loading} from './decorators';
 
 class TreeNode extends React.Component {
     constructor(props) {
@@ -69,91 +68,74 @@ class TreeNode extends React.Component {
         };
     }
 
-    decorators() {
-        // Merge Any Node Based Decorators Into The Pack
-        const {decorators, node} = this.props;
-        let nodeDecorators = node.decorators || {};
-
-        return Object.assign({}, decorators, nodeDecorators);
-    }
-
     render() {
-        const {style} = this.props;
-        const decorators = this.decorators();
         const animations = this.animations();
 
         return (
-            <li ref={ref => this.topLevelRef = ref}
-                style={style.base}>
-                {this.renderHeader(decorators, animations)}
+            <li ref={ref => { this.topLevelRef = ref; }} className="rt-node">
+                {this.renderHeader(animations)}
 
-                {this.renderDrawer(decorators, animations)}
+                {this.renderDrawer(animations)}
             </li>
         );
     }
 
-    renderDrawer(decorators, animations) {
+    renderDrawer(animations) {
         const {node: {toggled}} = this.props;
 
         if (!animations && !toggled) {
             return null;
         } else if (!animations && toggled) {
-            return this.renderChildren(decorators, animations);
+            return this.renderChildren(animations);
         }
 
         const {...restAnimationInfo} = animations.drawer;
         return (
             <VelocityTransitionGroup {...restAnimationInfo}
-                                     ref={ref => this.velocityRef = ref}>
-                {toggled ? this.renderChildren(decorators, animations) : null}
+                                     ref={ref => { this.velocityRef = ref; }}>
+                {toggled ? this.renderChildren(animations) : null}
             </VelocityTransitionGroup>
         );
     }
 
-    renderHeader(decorators, animations) {
-        const {node, style} = this.props;
+    renderHeader(animations) {
+        const {node} = this.props;
 
         return (
             <NodeHeader animations={animations}
-                        decorators={decorators}
                         node={Object.assign({}, node)}
                         onClick={this.select.bind(this)}
-                        onOpen={this.toggle.bind(this)}
-                        style={style}/>
+                        onOpen={this.toggle.bind(this)} />
         );
     }
 
-    renderChildren(decorators) {
-        const {animations, decorators: propDecorators, node, style} = this.props;
+    renderChildren() {
+        const {animations, node} = this.props;
 
         if (node.loading) {
-            return this.renderLoading(decorators);
+            return this.renderLoading();
         }
 
         return (
-            <ul style={style.subtree} ref={ref => this.subtreeRef = ref}>
+            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
                 {
                     (node.children || []).map((child, index) => {
 
                         return (<TreeNode {...this._eventBubbles()}
                                           animations={animations}
-                                          decorators={propDecorators}
                                           key={child.id || index}
-                                          node={child}
-                                          style={style}/>);
+                                          node={child} />);
                     })
                 }
             </ul>
         );
     }
 
-    renderLoading(decorators) {
-        const {style} = this.props;
-
+    renderLoading() {
         return (
-            <ul style={style.subtree}>
+            <ul className="rt-tree">
                 <li>
-                    <decorators.Loading style={style.loading}/>
+                    <Loading />
                 </li>
             </ul>
         );
@@ -171,9 +153,7 @@ class TreeNode extends React.Component {
 }
 
 TreeNode.propTypes = {
-    style: PropTypes.object.isRequired,
     node: PropTypes.object.isRequired,
-    decorators: PropTypes.object.isRequired,
     animations: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.bool
