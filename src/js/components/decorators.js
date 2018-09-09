@@ -13,7 +13,6 @@ const Toggle = ({onOpen}) => {
     return (
         <div className="rt-toggle" onClick={onOpen}>
             <div className="rt-toggle-wrapper">
-                &gt;
             </div>
         </div>
     );
@@ -28,8 +27,8 @@ const Header = ({node, onClick}) => {
     const iconClass = `rt-node-icon fa fa-${iconType}`;
 
     return (
-        <div className="rt-node-header">
-            <div onClick={onClick} className="rt-node-title">
+        <div className="rt-node-header" onClick={onClick}>
+            <div className="rt-node-title">
                 <i className={iconClass} />
 
                 {node.name}

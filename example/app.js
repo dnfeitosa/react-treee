@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {Treee} from '../index';
+import {Treee} from '../src/js/index';
 
 import data from './data';
 import styles from './styles';
@@ -63,6 +63,7 @@ class DemoTree extends React.Component {
         }
         var filtered = filters.filterTree(data, filter);
         filtered = filters.expandFilteredNodes(filtered, filter);
+        console.log(filtered);
         this.setState({data: filtered});
     }
 

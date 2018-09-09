@@ -38,12 +38,17 @@
   left: 50%;
   margin: -11px 0 0 -7px;
   height: 14px;
+
+  &::before {
+    content: ">";
+  }
 }
 
 .rt-node-header {
   display: inline-block;
   vertical-align: top;
   color: #9DA5AB;
+  width: 80%;
 
   .rt-node-icon {
     margin-right: 5px;
