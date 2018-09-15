@@ -7,7 +7,7 @@ import data from './data';
 import styles from './styles';
 import * as filters from './filter';
 
-import '../src/scss/react-treee.scss';
+import '../src/scss/themes/default.scss';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 

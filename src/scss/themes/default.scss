@@ -1,0 +1,18 @@
+$node-text-color: #9DA5AB;
+$node-text-font: lucida grande, tahoma, verdana, arial, sans-serif;
+$node-text-font-size: 14px;
+
+$node-selected-text-color: $node-text-color;
+$node-selected-background-color: #31363F;
+
+$node-toggle-color: $node-text-color;
+
+$node-icon-color: $node-text-color;
+
+$loading-color: #E2C089;
+
+%node-toggle {
+  content: ">"
+}
+
+@import "../tree";
