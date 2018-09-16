@@ -23,8 +23,7 @@ Toggle.propTypes = {
 };
 
 const Header = ({node, onClick}) => {
-    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
-    const iconClass = `rt-node-icon fa fa-${iconType}`;
+    const iconClass = `rt-node-icon fa fa-${node.icon}`;
 
     return (
         <div className="rt-node-header" onClick={onClick}>
