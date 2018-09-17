@@ -2,7 +2,7 @@ export default class CoreModel {
     children;
 
     appendChild(node) {
-        if (!this.children) {
+        if (!Array.isArray(this.children)) {
             this.children = [];
         }
         this.children.push(node);

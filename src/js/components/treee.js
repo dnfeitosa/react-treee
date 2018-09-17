@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Tree from '../model/tree';
 import TreeNode from './node';
 import defaultAnimations from '../themes/animations';
+import shallowEqual from 'shallowequal';
 
 class Treee extends React.Component {
 
@@ -32,8 +33,8 @@ class Treee extends React.Component {
         this.setState({selected: node});
     }
 
-    shouldComponentUpdate() {
-        return false;
+    shouldComponentUpdate(nextProps) {
+        return !shallowEqual(this.props.data, nextProps.data);
     }
 
     render() {
