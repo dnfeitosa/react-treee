@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import {Treee} from '../index';
+import {Treee} from '../src/js/index';
 
 import data from './data';
 import styles from './styles';
 import * as filters from './filter';
 
-import '../src/scss/react-treee.scss';
+import '../src/scss/themes/default.scss';
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
@@ -63,6 +63,7 @@ class DemoTree extends React.Component {
         }
         var filtered = filters.filterTree(data, filter);
         filtered = filters.expandFilteredNodes(filtered, filter);
+        console.log(filtered);
         this.setState({data: filtered});
     }
 

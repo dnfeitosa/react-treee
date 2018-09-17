@@ -116,10 +116,12 @@ class TreeNode extends React.Component {
             return this.renderLoading();
         }
 
+        const childNodes = node.children && Array.isArray(node.children) ? node.children : [];
+
         return (
             <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
                 {
-                    (node.children || []).map((child, index) => {
+                    childNodes.map((child, index) => {
 
                         return (<TreeNode {...this._eventBubbles()}
                                           animations={animations}

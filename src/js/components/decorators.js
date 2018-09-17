@@ -13,7 +13,6 @@ const Toggle = ({onOpen}) => {
     return (
         <div className="rt-toggle" onClick={onOpen}>
             <div className="rt-toggle-wrapper">
-                &gt;
             </div>
         </div>
     );
@@ -24,12 +23,11 @@ Toggle.propTypes = {
 };
 
 const Header = ({node, onClick}) => {
-    const iconType = node.type === 'folder' ? 'folder' : 'file-text';
-    const iconClass = `rt-node-icon fa fa-${iconType}`;
+    const iconClass = `rt-node-icon fa fa-${node.icon}`;
 
     return (
-        <div className="rt-node-header">
-            <div onClick={onClick} className="rt-node-title">
+        <div className="rt-node-header" onClick={onClick}>
+            <div className="rt-node-title">
                 <i className={iconClass} />
 
                 {node.name}
