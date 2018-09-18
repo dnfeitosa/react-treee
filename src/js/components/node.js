@@ -54,63 +54,39 @@ class TreeNode extends React.Component {
         }
     }
 
-    animations() {
-        const {animations, node} = this.props;
-
-        if (animations === false) {
-            return false;
-        }
-
-        const anim = Object.assign({}, animations, node.animations);
-        return {
-            toggle: anim.toggle(this.props),
-            drawer: anim.drawer(this.props)
-        };
-    }
-
     render() {
-        const animations = this.animations();
-
         return (
             <li ref={ref => { this.topLevelRef = ref; }} className="rt-node">
-                {this.renderHeader(animations)}
+                {this.renderHeader()}
 
-                {this.renderDrawer(animations)}
+                {this.renderDrawer()}
             </li>
         );
     }
 
-    renderDrawer(animations) {
+    renderDrawer() {
         const {node: {toggled}} = this.props;
 
-        if (!animations && !toggled) {
-            return null;
-        } else if (!animations && toggled) {
-            return this.renderChildren(animations);
-        }
-
-        const {...restAnimationInfo} = animations.drawer;
         return (
-            <VelocityTransitionGroup {...restAnimationInfo}
-                                     ref={ref => { this.velocityRef = ref; }}>
-                {toggled ? this.renderChildren(animations) : null}
+            <VelocityTransitionGroup enter={{ animation: 'slideDown', duration: 300 }}
+                                     leave={{ animation: 'slideUp', duration: 300 }}>
+                {toggled ? this.renderChildren() : null}
             </VelocityTransitionGroup>
         );
     }
 
-    renderHeader(animations) {
+    renderHeader() {
         const {node} = this.props;
 
         return (
-            <NodeHeader animations={animations}
-                        node={Object.assign({}, node)}
+            <NodeHeader node={Object.assign({}, node)}
                         onClick={this.select.bind(this)}
                         onOpen={this.toggle.bind(this)} />
         );
     }
 
     renderChildren() {
-        const {animations, node} = this.props;
+        const {node} = this.props;
 
         if (node.loading) {
             return this.renderLoading();
@@ -124,7 +100,6 @@ class TreeNode extends React.Component {
                     childNodes.map((child, index) => {
 
                         return (<TreeNode {...this._eventBubbles()}
-                                          animations={animations}
                                           key={child.id || index}
                                           node={child} />);
                     })
@@ -156,10 +131,6 @@ class TreeNode extends React.Component {
 
 TreeNode.propTypes = {
     node: PropTypes.object.isRequired,
-    animations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ]).isRequired,
     onSelect: PropTypes.func,
     onOpen: PropTypes.func,
     onClose: PropTypes.func

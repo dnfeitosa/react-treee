@@ -21,18 +21,17 @@ class NodeHeader extends React.Component {
             }
         }
 
-        return !deepEqual(props.animations, nextProps.animations, {strict: true});
+        return false;
     }
 
     render() {
-        const {animations, node, onClick, onOpen} = this.props;
+        const {node, onClick, onOpen} = this.props;
         const {children} = node;
         const terminal = !children;
         const classes = ['rt-link', node.active ? 'rt-link-active' : null];
 
         return (
-            <Container animations={animations}
-                       node={node}
+            <Container node={node}
                        onClick={onClick}
                        onOpen={onOpen}
                        terminal={terminal}
@@ -42,10 +41,6 @@ class NodeHeader extends React.Component {
 }
 
 NodeHeader.propTypes = {
-    animations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ]).isRequired,
     node: PropTypes.object.isRequired,
     onClick: PropTypes.func,
     onOpen: PropTypes.func

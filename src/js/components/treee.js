@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Tree from '../model/tree';
 import TreeNode from './node';
-import defaultAnimations from '../themes/animations';
 import shallowEqual from 'shallowequal';
 
 class Treee extends React.Component {
@@ -38,14 +37,13 @@ class Treee extends React.Component {
     }
 
     render() {
-        const {animations, data, onOpenNode, onCloseNode} = this.props;
+        const {data, onOpenNode, onCloseNode} = this.props;
 
         const tree = Tree.fromData(data);
         return (
             <ul className="rt-tree" ref={ref => { this.treeBaseRef = ref; }}>
                 {(tree.children || []).map((node, index) =>
-                    <TreeNode animations={animations}
-                              key={node.id || index}
+                    <TreeNode key={node.id || index}
                               node={node}
                               onSelect={this.select.bind(this)}
                               onOpen={onOpenNode}
@@ -61,10 +59,6 @@ Treee.propTypes = {
         PropTypes.object,
         PropTypes.array
     ]).isRequired,
-    animations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ]),
     onSelectNode: PropTypes.func,
     onDeselectNode: PropTypes.func,
     onOpenNode: PropTypes.func,
@@ -72,7 +66,6 @@ Treee.propTypes = {
 };
 
 Treee.defaultProps = {
-    animations: defaultAnimations
 };
 
 export default Treee;

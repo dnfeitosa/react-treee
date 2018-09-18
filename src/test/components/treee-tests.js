@@ -7,7 +7,6 @@ import sinon from 'sinon';
 
 import TreeNode from '../../js/components/node';
 import Treee from '../../js/components/treee';
-import defaultAnimations from '../../js/themes/animations';
 
 const defaults = {
     name: '',
@@ -27,13 +26,6 @@ describe('treee component', () => {
         const nodes = TestUtils.scryRenderedComponentsWithType(treee, TreeNode);
 
         nodes.length.should.equal(1);
-    });
-
-    it('should use the default animations if none specified', () => {
-        const treee = TestUtils.renderIntoDocument(<Treee data={defaults}/>);
-        const node = TestUtils.findRenderedComponentWithType(treee, TreeNode);
-
-        node.props.animations.should.equal(defaultAnimations);
     });
 
     it('should support rendering multiple nodes at the root level', () => {
