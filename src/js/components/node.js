@@ -5,6 +5,53 @@ import {VelocityTransitionGroup} from 'velocity-react';
 import NodeHeader from './header';
 import {Loading} from './decorators';
 
+class ChildNodes extends React.Component {
+
+    render() {
+        const {node} = this.props;
+
+        if (node.loading) {
+            return this.renderLoading();
+        }
+
+        const childNodes = node.children && Array.isArray(node.children) ? node.children : [];
+
+        return (
+            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
+                {
+                    childNodes.map((child, index) => {
+
+                        return (<TreeNode {...this._eventBubbles()}
+                                          key={child.id || index}
+                                          node={child} />);
+                    })
+                }
+            </ul>
+        );
+    }
+
+    renderLoading() {
+        return (
+            <ul className="rt-tree">
+                <li>
+                    <Loading />
+                </li>
+            </ul>
+        );
+    }
+
+    _eventBubbles() {
+        const {onSelect, onOpen, onClose} = this.props;
+
+        return {
+            onSelect,
+            onOpen,
+            onClose
+        };
+    }
+
+}
+
 class TreeNode extends React.Component {
     constructor(props) {
         super(props);
@@ -86,46 +133,10 @@ class TreeNode extends React.Component {
     }
 
     renderChildren() {
-        const {node} = this.props;
-
-        if (node.loading) {
-            return this.renderLoading();
-        }
-
-        const childNodes = node.children && Array.isArray(node.children) ? node.children : [];
-
+        const {node, onOpen, onClose, onSelect} = this.props;
         return (
-            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
-                {
-                    childNodes.map((child, index) => {
-
-                        return (<TreeNode {...this._eventBubbles()}
-                                          key={child.id || index}
-                                          node={child} />);
-                    })
-                }
-            </ul>
+            <ChildNodes node={node} {...{onOpen, onClose, onSelect}} />
         );
-    }
-
-    renderLoading() {
-        return (
-            <ul className="rt-tree">
-                <li>
-                    <Loading />
-                </li>
-            </ul>
-        );
-    }
-
-    _eventBubbles() {
-        const {onSelect, onOpen, onClose} = this.props;
-
-        return {
-            onSelect,
-            onOpen,
-            onClose
-        };
     }
 }
 
