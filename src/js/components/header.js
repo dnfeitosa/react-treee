@@ -28,14 +28,12 @@ class NodeHeader extends React.Component {
         const {node, onClick, onOpen} = this.props;
         const {children} = node;
         const terminal = !children;
-        const classes = ['rt-link', node.active ? 'rt-link-active' : null];
 
         return (
             <Container node={node}
                        onClick={onClick}
                        onOpen={onOpen}
-                       terminal={terminal}
-                       className={classes.join(' ')}/>
+                       terminal={terminal} />
         );
     }
 }
