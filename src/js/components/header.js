@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shallowEqual from 'shallowequal';
-import deepEqual from 'deep-equal';
 import {Container} from './decorators';
 
 class NodeHeader extends React.Component {
