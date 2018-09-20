@@ -61,8 +61,7 @@ class TreeNode extends React.Component {
     }
 
     toggle() {
-        const {onOpen, onClose} = this.props;
-        const {node} = this.state;
+        const {node, onOpen, onClose} = this.props;
 
         if (!node.toggled && onOpen) {
             onOpen(node);
@@ -79,18 +78,24 @@ class TreeNode extends React.Component {
         this.setState({node});
     }
 
+    static getDerivedStateFromProps(props, state) {
+        return {
+            node: Object.assign({}, props.node)
+        };
+    }
+
     deactivate() {
-        const {node} = this.state;
+        const {node} = this.props;
         node.active = false;
 
-        this.setState({node});
+        this.setState({});
     }
 
     activate() {
-        const {node} = this.state;
+        const {node} = this.props;
         node.active = true;
 
-        this.setState({node});
+        this.setState({});
     }
 
     select() {
@@ -112,7 +117,7 @@ class TreeNode extends React.Component {
     }
 
     renderDrawer() {
-        const {node: {toggled}} = this.props;
+        const {node: {toggled}} = this.state;
 
         return (
             <VelocityTransitionGroup enter={{ animation: 'slideDown', duration: 300 }}
@@ -123,7 +128,7 @@ class TreeNode extends React.Component {
     }
 
     renderHeader() {
-        const {node} = this.props;
+        const {node} = this.state;
 
         return (
             <NodeHeader node={Object.assign({}, node)}
@@ -133,7 +138,8 @@ class TreeNode extends React.Component {
     }
 
     renderChildren() {
-        const {node, onOpen, onClose, onSelect} = this.props;
+        const {onOpen, onClose, onSelect} = this.props;
+        const {node} = this.state;
         return (
             <ChildNodes node={node} {...{onOpen, onClose, onSelect}} />
         );
