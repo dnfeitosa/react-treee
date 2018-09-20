@@ -3,11 +3,11 @@ export default {
     name: 'react-treebeard',
     toggled: true,
     active: false,
-    type: 'folder',
+    icon: 'folder',
     children: [
         {
             name: 'example',
-            type: 'folder',
+            icon: 'folder',
             children: [
                 { name: 'app.js' },
                 { name: 'data.js' },
@@ -18,17 +18,17 @@ export default {
         },
         {
             name: 'node_modules',
-            type: 'folder',
+            icon: 'folder',
             loading: true,
             children: true
         },
         {
             name: 'src',
-            type: 'folder',
+            icon: 'folder',
             children: [
                 {
                     name: 'components',
-                    type: 'folder',
+                    icon: 'folder',
                     children: [
                         { name: 'decorators.js' },
                         { name: 'tree.js' }
@@ -39,7 +39,7 @@ export default {
         },
         {
             name: 'themes',
-            type: 'folder',
+            icon: 'folder',
             children: [
                 { name: 'animations.js' },
                 { name: 'default.js' }
