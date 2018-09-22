@@ -36,7 +36,8 @@
     "url": "https://github.com/dnfeitosa/react-treee/issues"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "models.js"
   ],
   "homepage": "https://github.com/dnfeitosa/react-treee#readme",
   "devDependencies": {
