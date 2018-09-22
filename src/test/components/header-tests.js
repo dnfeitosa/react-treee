@@ -62,28 +62,4 @@ describe('header component', () => {
 
         container.props.terminal.should.be.false;
     });
-
-    it('should add the active style class the node is active', () => {
-        const node = {active: true};
-        const header = TestUtils.renderIntoDocument(
-            <Header {...defaults}
-                    node={node} />
-        );
-        const container = TestUtils.findRenderedComponentWithType(header, Container);
-
-        console.log(container.props);
-
-        container.props.className.should.match(/rt-link-active/);
-    });
-
-    // it('should not pass the active link style prop to the container when the node is inactive', () => {
-    //     const node = {active: false};
-    //     const header = TestUtils.renderIntoDocument(
-    //         <Header {...defaults}
-    //                 node={node} />
-    //     );
-    //     const container = TestUtils.findRenderedComponentWithType(header, ContainerType);
-    //
-    //     global.should.not.exist(container.props.style.container[1]);
-    // });
 });

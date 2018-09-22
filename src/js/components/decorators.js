@@ -80,6 +80,8 @@ Container.propTypes = {
     node: PropTypes.object.isRequired
 };
 
+export default Loading;
+
 export {
     Loading,
     Toggle,

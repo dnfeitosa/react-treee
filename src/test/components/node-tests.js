@@ -9,6 +9,7 @@ import {VelocityTransitionGroup as TransitionGroup} from 'velocity-react';
 import Tree from '../../js/model/tree';
 import Node from '../../js/model/node';
 import NodeHeader from '../../js/components/header';
+import {Loading} from '../../js/components/decorators';
 import TreeNode from '../../js/components/node';
 
 import {createDecorators} from '../utils/factory';
@@ -150,17 +151,6 @@ describe('node component', () => {
         component.should.exist;
     });
 
-    it('should wrap the children in a list', () => {
-        const node = new Node(null, {toggled: true});
-        const treeNode = TestUtils.renderIntoDocument(
-            <TreeNode {...defaults}
-                      node={node}/>
-        );
-        const subtree = treeNode.subtreeRef;
-
-        subtree.tagName.toLowerCase().should.equal('ul');
-    });
-
     it('should render a TreeNode component for each child', () => {
         const tree = Tree.fromData({
             name: 'root',
@@ -190,6 +180,7 @@ describe('node component', () => {
                       node={node} />
         );
 
-        global.should.not.exist(treeNode.subtreeRef);
+        const component = TestUtils.scryRenderedComponentsWithType(treeNode, Loading);
+        component.should.exist;
     });
 });

@@ -3,54 +3,7 @@ import PropTypes from 'prop-types';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import NodeHeader from './header';
-import {Loading} from './decorators';
-
-class ChildNodes extends React.Component {
-
-    render() {
-        const {node} = this.props;
-
-        if (node.loading) {
-            return this.renderLoading();
-        }
-
-        const childNodes = node.children && Array.isArray(node.children) ? node.children : [];
-
-        return (
-            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
-                {
-                    childNodes.map((child, index) => {
-
-                        return (<TreeNode {...this._eventBubbles()}
-                                          key={child.id || index}
-                                          node={child} />);
-                    })
-                }
-            </ul>
-        );
-    }
-
-    renderLoading() {
-        return (
-            <ul className="rt-tree">
-                <li>
-                    <Loading />
-                </li>
-            </ul>
-        );
-    }
-
-    _eventBubbles() {
-        const {onSelect, onOpen, onClose} = this.props;
-
-        return {
-            onSelect,
-            onOpen,
-            onClose
-        };
-    }
-
-}
+import ChildNodes from './child-nodes';
 
 class TreeNode extends React.Component {
     constructor(props) {
@@ -141,7 +94,7 @@ class TreeNode extends React.Component {
         const {onOpen, onClose, onSelect} = this.props;
         const {node} = this.state;
         return (
-            <ChildNodes node={node} {...{onOpen, onClose, onSelect}} />
+            <ChildNodes node={node} {...{onOpen, onClose, onSelect}} ref={ref => { this.subtreeRef = ref; }}/>
         );
     }
 }
