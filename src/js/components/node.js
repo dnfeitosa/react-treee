@@ -9,26 +9,40 @@ class TreeNode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            node: props.node
+            node: Object.assign({}, props.node)
         };
     }
 
     toggle() {
         const {node, onOpen, onClose} = this.props;
 
-        if (!node.toggled && onOpen) {
-            onOpen(node);
+        const apply = (toggled) => {
+            if (node.children) {
+                node.toggled = toggled;
+            }
+            this.setState({ node });
+        };
+
+        const handleResult = (result, toggled) => {
+            if (result === undefined || result) {
+                apply(toggled);
+            }
+
+            if (result instanceof Promise) {
+                result
+                    .then(() => apply(toggled))
+                    .catch(() => apply(false));
+            }
+        };
+
+        if (!node.toggled) {
+            handleResult(onOpen(node), true);
+            return;
         }
 
-        if (node.toggled && onClose) {
-            onClose(node);
+        if (node.toggled) {
+            handleResult(onClose(node), false);
         }
-
-        if (node.children) {
-            node.toggled = !node.toggled;
-        }
-
-        this.setState({node});
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -54,9 +68,7 @@ class TreeNode extends React.Component {
     select() {
         const {onSelect} = this.props;
 
-        if (onSelect) {
-            onSelect(this);
-        }
+        onSelect(this);
     }
 
     render() {
@@ -101,9 +113,15 @@ class TreeNode extends React.Component {
 
 TreeNode.propTypes = {
     node: PropTypes.object.isRequired,
-    onSelect: PropTypes.func,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func
+    onSelect: PropTypes.func.isRequired,
+    onOpen: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
+};
+
+TreeNode.defaultProps = {
+    onSelect: () => {},
+    onOpen: () => {},
+    onClose: () => {}
 };
 
 export default TreeNode;

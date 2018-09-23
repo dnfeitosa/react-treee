@@ -63,7 +63,7 @@ describe('node component', () => {
         const treeNode = TestUtils.renderIntoDocument(
             <TreeNode {...defaults}
                       node={node}
-                      onOpen={onOpen}/>
+                      onOpen={onOpen} />
         );
         treeNode.toggle();
 

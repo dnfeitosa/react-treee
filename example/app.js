@@ -54,6 +54,15 @@ class DemoTree extends React.Component {
 
     onOpen(node) {
         console.log('open', node);
+        if (node.name === 'themes') {
+            node.loading = true;
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    node.loading = false;
+                    resolve();
+                }, 3000);
+            });
+        }
     }
 
     onFilterMouseUp(e) {

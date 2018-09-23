@@ -38,7 +38,6 @@ class Treee extends React.Component {
 
     render() {
         const {data, onOpenNode, onCloseNode} = this.props;
-
         const tree = Tree.fromData(data);
         return (
             <ul className="rt-tree" ref={ref => { this.treeBaseRef = ref; }}>
@@ -66,6 +65,10 @@ Treee.propTypes = {
 };
 
 Treee.defaultProps = {
+    onSelectNode: () => {},
+    onDeselectNode: () => {},
+    onOpenNode: () => {},
+    onCloseNode: () => {}
 };
 
 export default Treee;
