@@ -9,11 +9,11 @@ export default {
             name: 'example',
             icon: 'folder',
             children: [
-                { name: 'app.js' },
-                { name: 'data.js' },
-                { name: 'index.html' },
-                { name: 'styles.js' },
-                { name: 'webpack.config.js' }
+                { icon: 'file-text', name: 'app.js' },
+                { icon: 'file-text', name: 'data.js' },
+                { icon: 'file-text', name: 'index.html' },
+                { icon: 'file-text', name: 'styles.js' },
+                { icon: 'file-text', name: 'webpack.config.js' }
             ]
         },
         {
@@ -30,23 +30,23 @@ export default {
                     name: 'components',
                     icon: 'folder',
                     children: [
-                        { name: 'decorators.js' },
-                        { name: 'tree.js' }
+                        { icon: 'file-text', name: 'decorators.js' },
+                        { icon: 'file-text', name: 'tree.js' }
                     ]
                 },
-                { name: 'index.js' }
+                { icon: 'file-text', name: 'index.js' }
             ]
         },
         {
             name: 'themes',
             icon: 'folder',
             children: [
-                { name: 'animations.js' },
-                { name: 'default.js' }
+                { icon: 'file-text', name: 'animations.js' },
+                { icon: 'file-text', name: 'default.js' }
             ]
         },
-        { name: 'Gulpfile.js' },
-        { name: 'index.js' },
-        { name: 'package.json' }
+        { icon: 'file-text', name: 'Gulpfile.js' },
+        { icon: 'file-text', name: 'index.js' },
+        { icon: 'file-text', name: 'package.json' }
     ]
 };
