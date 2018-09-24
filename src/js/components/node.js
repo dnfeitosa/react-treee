@@ -3,166 +3,125 @@ import PropTypes from 'prop-types';
 import {VelocityTransitionGroup} from 'velocity-react';
 
 import NodeHeader from './header';
-import {Loading} from './decorators';
+import ChildNodes from './child-nodes';
 
 class TreeNode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            node: props.node
+            node: Object.assign({}, props.node)
         };
     }
 
     toggle() {
-        const {onOpen, onClose} = this.props;
-        const {node} = this.state;
+        const {node, onOpen, onClose} = this.props;
 
-        if (!node.toggled && onOpen) {
-            onOpen(node);
+        const apply = (toggled) => {
+            if (node.children) {
+                node.toggled = toggled;
+            }
+            this.setState({ node });
+        };
+
+        const handleResult = (result, toggled) => {
+            if (result === undefined || result) {
+                apply(toggled);
+            }
+
+            if (result instanceof Promise) {
+                result
+                    .then(() => apply(toggled))
+                    .catch(() => apply(false));
+            }
+        };
+
+        if (!node.toggled) {
+            handleResult(onOpen(node), true);
+            return;
         }
 
-        if (node.toggled && onClose) {
-            onClose(node);
+        if (node.toggled) {
+            handleResult(onClose(node), false);
         }
+    }
 
-        if (node.children) {
-            node.toggled = !node.toggled;
-        }
-
-        this.setState({node});
+    static getDerivedStateFromProps(props, state) {
+        return {
+            node: Object.assign({}, props.node)
+        };
     }
 
     deactivate() {
-        const {node} = this.state;
+        const {node} = this.props;
         node.active = false;
 
-        this.setState({node});
+        this.setState({});
     }
 
     activate() {
-        const {node} = this.state;
+        const {node} = this.props;
         node.active = true;
 
-        this.setState({node});
+        this.setState({});
     }
 
     select() {
         const {onSelect} = this.props;
 
-        if (onSelect) {
-            onSelect(this);
-        }
-    }
-
-    animations() {
-        const {animations, node} = this.props;
-
-        if (animations === false) {
-            return false;
-        }
-
-        const anim = Object.assign({}, animations, node.animations);
-        return {
-            toggle: anim.toggle(this.props),
-            drawer: anim.drawer(this.props)
-        };
+        onSelect(this);
     }
 
     render() {
-        const animations = this.animations();
-
         return (
             <li ref={ref => { this.topLevelRef = ref; }} className="rt-node">
-                {this.renderHeader(animations)}
+                {this.renderHeader()}
 
-                {this.renderDrawer(animations)}
+                {this.renderDrawer()}
             </li>
         );
     }
 
-    renderDrawer(animations) {
-        const {node: {toggled}} = this.props;
+    renderDrawer() {
+        const {node: {toggled}} = this.state;
 
-        if (!animations && !toggled) {
-            return null;
-        } else if (!animations && toggled) {
-            return this.renderChildren(animations);
-        }
-
-        const {...restAnimationInfo} = animations.drawer;
         return (
-            <VelocityTransitionGroup {...restAnimationInfo}
-                                     ref={ref => { this.velocityRef = ref; }}>
-                {toggled ? this.renderChildren(animations) : null}
+            <VelocityTransitionGroup enter={{ animation: 'slideDown', duration: 300 }}
+                                     leave={{ animation: 'slideUp', duration: 300 }}>
+                {toggled ? this.renderChildren() : null}
             </VelocityTransitionGroup>
         );
     }
 
-    renderHeader(animations) {
-        const {node} = this.props;
+    renderHeader() {
+        const {node} = this.state;
 
         return (
-            <NodeHeader animations={animations}
-                        node={Object.assign({}, node)}
+            <NodeHeader node={Object.assign({}, node)}
                         onClick={this.select.bind(this)}
                         onOpen={this.toggle.bind(this)} />
         );
     }
 
     renderChildren() {
-        const {animations, node} = this.props;
-
-        if (node.loading) {
-            return this.renderLoading();
-        }
-
-        const childNodes = node.children && Array.isArray(node.children) ? node.children : [];
-
+        const {onOpen, onClose, onSelect} = this.props;
+        const {node} = this.state;
         return (
-            <ul className="rt-tree" ref={ref => { this.subtreeRef = ref; }}>
-                {
-                    childNodes.map((child, index) => {
-
-                        return (<TreeNode {...this._eventBubbles()}
-                                          animations={animations}
-                                          key={child.id || index}
-                                          node={child} />);
-                    })
-                }
-            </ul>
+            <ChildNodes node={node} {...{onOpen, onClose, onSelect}} ref={ref => { this.subtreeRef = ref; }}/>
         );
-    }
-
-    renderLoading() {
-        return (
-            <ul className="rt-tree">
-                <li>
-                    <Loading />
-                </li>
-            </ul>
-        );
-    }
-
-    _eventBubbles() {
-        const {onSelect, onOpen, onClose} = this.props;
-
-        return {
-            onSelect,
-            onOpen,
-            onClose
-        };
     }
 }
 
 TreeNode.propTypes = {
     node: PropTypes.object.isRequired,
-    animations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ]).isRequired,
-    onSelect: PropTypes.func,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func
+    onSelect: PropTypes.func.isRequired,
+    onOpen: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
+};
+
+TreeNode.defaultProps = {
+    onSelect: () => {},
+    onOpen: () => {},
+    onClose: () => {}
 };
 
 export default TreeNode;

@@ -56,15 +56,11 @@ class Container extends React.Component {
     }
 
     renderToggle() {
-        const {animations} = this.props;
-
-        if (!animations) {
-            return this.renderToggleDecorator();
-        }
+        const {node} = this.props;
 
         return (
-            <VelocityComponent animation={animations.toggle.animation}
-                               duration={animations.toggle.duration}
+            <VelocityComponent animation={{rotateZ: node.toggled ? 90 : 0}}
+                               duration={300}
                                ref={ref => { this.velocityRef = ref; }}>
                 {this.renderToggleDecorator()}
             </VelocityComponent>
@@ -81,12 +77,10 @@ Container.propTypes = {
     terminal: PropTypes.bool.isRequired,
     onClick: PropTypes.func,
     onOpen: PropTypes.func,
-    animations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ]).isRequired,
     node: PropTypes.object.isRequired
 };
+
+export default Loading;
 
 export {
     Loading,

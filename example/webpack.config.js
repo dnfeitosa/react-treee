@@ -24,7 +24,7 @@ module.exports = {
         rules: [{
             test: /\.js$/,
             exclude: [/node_modules/],
-            use: ['react-hot-loader', 'babel-loader']
+            use: ['react-hot-loader/webpack', 'babel-loader']
         }, {
             test: /\.scss/,
             use: [{
